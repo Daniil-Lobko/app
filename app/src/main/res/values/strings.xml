@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">DigiJet-android-app</string>
+    <string name="app_name">Your App Name</string>
+    <string name="login_title">Login</string>
+    <string name="register_title">Register</string>
 </resources>
