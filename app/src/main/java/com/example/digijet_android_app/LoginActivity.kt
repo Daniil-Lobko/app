@@ -42,6 +42,11 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     Log.d(TAG, "loginWithEmail:success")
                     // Здесь можно перейти на другую активити после успешного входа
+
+                    val intent = Intent(this, MainPageActivity::class.java)
+                    startActivity(intent)
+                    finish()
+
                 } else {
                     Log.w(TAG, "loginWithEmail:failure", task.exception)
                     // Здесь можно обработать ошибку входа

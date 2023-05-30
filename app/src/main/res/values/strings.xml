@@ -4,5 +4,6 @@
     <string name="register_title">Register</string>
     <string name="welcome_title">Welcome</string>
     <string name="get_started" />
+    <string name="MainPage">MainPage</string>
     <string name="i_already_have_an_account" />
 </resources>

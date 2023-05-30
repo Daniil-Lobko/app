@@ -46,7 +46,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginRight="10dp"
         style="@style/ButtonStyle"
-        android:text="Get started" />
+        android:text="I already have an account" />
 
     <Button
         android:id="@+id/loginButton"
@@ -57,6 +57,6 @@
         android:layout_marginRight="10dp"
         style="@style/ButtonStyle"
         android:background="@drawable/rounded_corners2"
-        android:text="I already have an account" />
+        android:text="Register" />
 
 </LinearLayout>

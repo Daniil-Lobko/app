@@ -43,6 +43,11 @@ class RegisterActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     Log.d(TAG, "registerWithEmail:success")
                     // Здесь можно перейти на другую активити после успешной регистрации
+
+                    val intent = Intent(this, MainPageActivity::class.java)
+                    startActivity(intent)
+                    finish()
+
                 } else {
                     Log.w(TAG, "registerWithEmail:failure", task.exception)
                     // Здесь можно обработать ошибку регистрации
