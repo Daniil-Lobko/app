@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Your App Name</string>
+    <string name="app_name">PocketFilm</string>
     <string name="login_title">Login</string>
     <string name="register_title">Register</string>
     <string name="welcome_title">Welcome</string>
