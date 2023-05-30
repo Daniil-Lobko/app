@@ -3,15 +3,18 @@ package com.example.digijet_android_app
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
-import android.widget.Button
+import android.view.MenuItem
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.preference.PreferenceManager
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.digijet_android_app.Movie
-import com.example.digijet_android_app.MovieAdapter
-import com.example.digijet_android_app.R
+import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -20,16 +23,58 @@ import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
-class MainPageActivity : AppCompatActivity() {
+
+
+class MainPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var movieRecyclerView: RecyclerView
     private lateinit var movieAdapter: MovieAdapter
     private lateinit var sharedPreferences: SharedPreferences
-
+    private lateinit var drawerToggle: ActionBarDrawerToggle
+    private lateinit var drawerLayout: DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_page)
+
+        // Setup navigation drawer
+        val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
+        val navigationView = findViewById<NavigationView>(R.id.navigationView)
+
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_home -> {
+                    val intent = Intent(this@MainPageActivity, WelcomeActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                R.id.menu_logout -> {
+                    // Действия при выборе пункта "Logout"
+                    logout()
+                    true
+                }
+                else -> false
+            }
+        }
+
+        val iconButton = findViewById<ImageButton>(R.id.iconButton)
+        iconButton.setOnClickListener {
+            drawerLayout.openDrawer(GravityCompat.START)
+        }
+
+        // Create ActionBarDrawerToggle and attach it to the DrawerLayout
+        drawerToggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+        drawerLayout.addDrawerListener(drawerToggle)
+        drawerToggle.syncState()
+
+        // Enable the Up button
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         movieRecyclerView = findViewById(R.id.movieRecyclerView)
@@ -43,6 +88,23 @@ class MainPageActivity : AppCompatActivity() {
             movieRecyclerView.layoutManager = LinearLayoutManager(this@MainPageActivity)
             movieRecyclerView.adapter = movieAdapter
         }
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_logout -> logout()
+        }
+        // Close the navigation drawer after an item is selected
+        drawerLayout.closeDrawer(GravityCompat.START)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle ActionBarDrawerToggle clicks
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private suspend fun fetchMovies(): List<Movie> = withContext(Dispatchers.IO) {
@@ -95,10 +157,10 @@ class MainPageActivity : AppCompatActivity() {
                 movies.add(movie)
             }
         }
-        Log.d("Movie1:" , movies[0].toString());
-        Log.d("Movie2:" , movies[1].toString());
-        Log.d("Movie3:" , movies[2].toString());
-        Log.d("Movie4:" , movies[3].toString());
+        Log.d("Movie1:", movies[0].toString())
+        Log.d("Movie2:", movies[1].toString())
+        Log.d("Movie3:", movies[2].toString())
+        Log.d("Movie4:", movies[3].toString())
 
         movies
     }
@@ -110,7 +172,7 @@ class MainPageActivity : AppCompatActivity() {
         editor.apply()
 
         // Переходим на экран WelcomeActivity
-        val intent = Intent(this, WelcomeActivity::class.java)
+        val intent = Intent(this@MainPageActivity, WelcomeActivity::class.java)
         startActivity(intent)
         finish() // Закрываем текущую активность
     }
@@ -127,3 +189,6 @@ data class MovieData(
     val image: String,
     val imDbRating: String
 )
+
+
+
