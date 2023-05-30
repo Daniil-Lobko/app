@@ -33,13 +33,6 @@ class MainPageActivity : AppCompatActivity() {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         movieRecyclerView = findViewById(R.id.movieRecyclerView)
-        val backButton: Button = findViewById(R.id.backButton)
-
-        backButton.setOnClickListener {
-            // Переадресация на экран WelcomeActivity
-            logout()
-        }
-
 
         // Используем корутины для выполнения сетевого запроса
         GlobalScope.launch(Dispatchers.Main) {

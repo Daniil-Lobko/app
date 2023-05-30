@@ -4,20 +4,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/background"
+    android:textColor="@color/text_color"
     android:padding="16dp"
     tools:context=".LoginActivity">
 
     <Button
         android:id="@+id/backButton"
-        android:layout_width="wrap_content"
+        style="@style/BackButton" />
+
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Back" />
+        android:fontFamily="@font/manrope_extrabold"
+        android:gravity="center_horizontal"
+        android:text="LOGIN"
+        android:layout_marginTop="80dp"
+        android:textSize="28sp"/>
 
     <EditText
         android:id="@+id/emailEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_margin="16dp"
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:minHeight="48dp" />
@@ -26,7 +35,7 @@
         android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_margin="16dp"
         android:hint="Password"
         android:inputType="textPassword"
         android:minHeight="48dp" />
@@ -36,7 +45,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Login" />
+        android:text="Login"
+        style="@style/ButtonStyle"
+        android:background="@drawable/rounded_corners2"/>
 
     <CheckBox
         android:id="@+id/rememberMeCheckBox"
@@ -44,7 +55,10 @@
         android:layout_height="wrap_content"
         android:text="Remember me"
         android:minHeight="48dp"
-        android:minWidth="100dp" />
+        android:minWidth="100dp"
+        android:textColor="#3C3F40"
+        android:fontFamily="@font/manrope_medium"
+        android:textSize="16dp" />
 
 
 </LinearLayout>
