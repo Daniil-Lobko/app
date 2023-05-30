@@ -38,4 +38,13 @@
         android:layout_marginBottom="16dp"
         android:text="Login" />
 
+    <CheckBox
+        android:id="@+id/rememberMeCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remember me"
+        android:minHeight="48dp"
+        android:minWidth="100dp" />
+
+
 </LinearLayout>
