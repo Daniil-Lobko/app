@@ -1,10 +1,12 @@
 package com.example.digijet_android_app
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.digijet_android_app.Movie
@@ -22,20 +24,22 @@ class MainPageActivity : AppCompatActivity() {
 
     private lateinit var movieRecyclerView: RecyclerView
     private lateinit var movieAdapter: MovieAdapter
+    private lateinit var sharedPreferences: SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_page)
 
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         movieRecyclerView = findViewById(R.id.movieRecyclerView)
         val backButton: Button = findViewById(R.id.backButton)
 
         backButton.setOnClickListener {
             // Переадресация на экран WelcomeActivity
-            val intent = Intent(this, WelcomeActivity::class.java)
-            startActivity(intent)
-            finish()
+            logout()
         }
+
 
         // Используем корутины для выполнения сетевого запроса
         GlobalScope.launch(Dispatchers.Main) {
@@ -104,6 +108,18 @@ class MainPageActivity : AppCompatActivity() {
         Log.d("Movie4:" , movies[3].toString());
 
         movies
+    }
+
+    private fun logout() {
+        // Очищаем данные сессии из SharedPreferences
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
+
+        // Переходим на экран WelcomeActivity
+        val intent = Intent(this, WelcomeActivity::class.java)
+        startActivity(intent)
+        finish() // Закрываем текущую активность
     }
 }
 
