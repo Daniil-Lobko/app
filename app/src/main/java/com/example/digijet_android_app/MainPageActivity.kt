@@ -1,7 +1,9 @@
 package com.example.digijet_android_app
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +28,14 @@ class MainPageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main_page)
 
         movieRecyclerView = findViewById(R.id.movieRecyclerView)
+        val backButton: Button = findViewById(R.id.backButton)
+
+        backButton.setOnClickListener {
+            // Переадресация на экран WelcomeActivity
+            val intent = Intent(this, WelcomeActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         // Используем корутины для выполнения сетевого запроса
         GlobalScope.launch(Dispatchers.Main) {
@@ -45,7 +55,7 @@ class MainPageActivity : AppCompatActivity() {
             .build()
 
         val response = client.newCall(request).execute()
-        val responseData = response.body()?.string()
+        val responseData = response.body?.string()
 
         // Используем библиотеку Gson для разбора JSON-ответа
         val gson = Gson()
