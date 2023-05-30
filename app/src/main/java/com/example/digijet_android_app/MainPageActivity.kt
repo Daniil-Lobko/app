@@ -7,6 +7,7 @@ import android.preference.PreferenceManager
 import android.util.Log
 import android.view.MenuItem
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
+
 
 
 
@@ -41,26 +43,19 @@ class MainPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
         val navigationView = findViewById<NavigationView>(R.id.navigationView)
 
-        navigationView.setNavigationItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.menu_home -> {
-                    val intent = Intent(this@MainPageActivity, WelcomeActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                    true
-                }
-                R.id.menu_logout -> {
-                    // Действия при выборе пункта "Logout"
-                    logout()
-                    true
-                }
-                else -> false
-            }
+        val menuLogout = navigationView.findViewById<LinearLayout>(R.id.menu_logout)
+        menuLogout.setOnClickListener {
+            logout()
         }
 
         val iconButton = findViewById<ImageButton>(R.id.iconButton)
         iconButton.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
+        }
+
+        val closeButton = findViewById<ImageView>(R.id.closeButton)
+        closeButton.setOnClickListener {
+            drawerLayout.closeDrawer(GravityCompat.START)
         }
 
         // Create ActionBarDrawerToggle and attach it to the DrawerLayout

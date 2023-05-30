@@ -70,16 +70,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="30dp">
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="30dp"
+            android:clickable="true">
 
             <!-- Логотип -->
-            <ImageView
-                android:src="@drawable/logo_image"
-                android:layout_width="130dp"
-                android:layout_height="130dp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end">
 
-            <!-- Место с никнеймом -->
+                <!-- Логотип -->
+                <ImageView
+                    android:src="@drawable/logo_image"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"/>
+
+                <!-- Кнопка для закрытия NavigationView -->
+                <ImageView
+                    android:id="@+id/closeButton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/baseline_arrow_forward_24"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="20dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"/>
+
+            </RelativeLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -203,7 +224,6 @@
         </LinearLayout>
 
     </com.google.android.material.navigation.NavigationView>
-
 
 </androidx.drawerlayout.widget.DrawerLayout>
 
