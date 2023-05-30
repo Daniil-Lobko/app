@@ -20,10 +20,15 @@ data class Movie(
 class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val movieImageView: ImageView = itemView.findViewById(R.id.movieImageView)
-        val titleTextView: TextView = itemView.findViewById(R.id.titleTextView)
-        val yearTextView: TextView = itemView.findViewById(R.id.yearTextView)
-        val ratingTextView: TextView = itemView.findViewById(R.id.ratingTextView)
+        val movieImageView1: ImageView = itemView.findViewById(R.id.movieImageView1)
+        val titleTextView1: TextView = itemView.findViewById(R.id.titleTextView1)
+        val yearTextView1: TextView = itemView.findViewById(R.id.yearTextView1)
+        val ratingTextView1: TextView = itemView.findViewById(R.id.ratingTextView1)
+
+        val movieImageView2: ImageView = itemView.findViewById(R.id.movieImageView2)
+        val titleTextView2: TextView = itemView.findViewById(R.id.titleTextView2)
+        val yearTextView2: TextView = itemView.findViewById(R.id.yearTextView2)
+        val ratingTextView2: TextView = itemView.findViewById(R.id.ratingTextView2)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -32,18 +37,26 @@ class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<Movie
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val movie = movies[position]
+        val movie1 = movies[position * 2]
+        val movie2 = movies[position * 2 + 1]
 
         // Загрузка и отображение изображения с использованием Picasso
-        Picasso.get().load(movie.image).into(holder.movieImageView)
+        Picasso.get().load(movie1.image).into(holder.movieImageView1)
+        Picasso.get().load(movie2.image).into(holder.movieImageView2)
 
         // Установка названия, года и рейтинга фильма
-        holder.titleTextView.text = movie.title
-        holder.yearTextView.text = movie.year
-        holder.ratingTextView.text = movie.imDbRating
+        holder.titleTextView1.text = movie1.title
+        holder.yearTextView1.text = movie1.year
+        holder.ratingTextView1.text = movie1.imDbRating
+
+        holder.titleTextView2.text = movie2.title
+        holder.yearTextView2.text = movie2.year
+        holder.ratingTextView2.text = movie2.imDbRating
     }
 
+
+
     override fun getItemCount(): Int {
-        return movies.size
+        return movies.size / 2
     }
 }

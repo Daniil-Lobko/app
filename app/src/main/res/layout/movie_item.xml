@@ -5,34 +5,69 @@
     android:orientation="horizontal"
     android:padding="8dp">
 
-    <ImageView
-        android:id="@+id/movieImageView"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:scaleType="centerCrop" />
-
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:layout_marginStart="8dp">
+        android:layout_marginEnd="5dp">
+
+
+        <ImageView
+            android:id="@+id/movieImageView1"
+            android:layout_width="match_parent"
+            android:layout_height="237dp"
+            android:scaleType="centerCrop" />
 
         <TextView
-            android:id="@+id/titleTextView"
+            android:id="@+id/titleTextView1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/yearTextView"
+            android:id="@+id/yearTextView1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/ratingTextView"
+            android:id="@+id/ratingTextView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="5dp">
+
+        <ImageView
+            android:id="@+id/movieImageView2"
+            android:layout_width="match_parent"
+            android:layout_height="237dp"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/titleTextView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/yearTextView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/ratingTextView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="14sp" />
