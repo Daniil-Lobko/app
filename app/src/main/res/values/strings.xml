@@ -2,4 +2,7 @@
     <string name="app_name">Your App Name</string>
     <string name="login_title">Login</string>
     <string name="register_title">Register</string>
+    <string name="welcome_title">Welcome</string>
+    <string name="get_started" />
+    <string name="i_already_have_an_account" />
 </resources>
