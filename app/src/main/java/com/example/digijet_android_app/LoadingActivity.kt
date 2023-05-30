@@ -15,12 +15,13 @@ class LoadingActivity : AppCompatActivity() {
 
         val logoImageView: ImageView = findViewById(R.id.logoImageView)
 
-        logoImageView.alpha = 0f
-        logoImageView.animate().setDuration(2000).alpha(1f).withEndAction {
-            val intent = Intent(this@LoadingActivity, WelcomeActivity::class.java)
-            startActivity(intent)
+        logoImageView.alpha =0f
+        logoImageView.animate().setDuration(2000).alpha(1f).withEndAction{
+            val i = Intent(this, WelcomeActivity::class.java)
+            startActivity(i)
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             finish()
         }
+
     }
 }
