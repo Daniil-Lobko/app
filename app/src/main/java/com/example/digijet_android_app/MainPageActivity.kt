@@ -1,100 +1,39 @@
 package com.example.digijet_android_app
 
-import android.content.Intent
-import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import org.json.JSONArray
-import org.json.JSONObject
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.net.HttpURLConnection
-import java.net.URL
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.digijet_android_app.Movie
+import com.example.digijet_android_app.MovieAdapter
+import com.example.digijet_android_app.R
 
 class MainPageActivity : AppCompatActivity() {
 
-    companion object {
-        private const val API_URL = "https://imdb-api.com/en/API/Top250Movies/k_kpn1nxdc" // Замените на вашу ссылку API
-        private const val TAG = "Top250Films"
-    }
+    private lateinit var movieRecyclerView: RecyclerView
+    private lateinit var movieAdapter: MovieAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_page)
 
-        val backButton: Button = findViewById(R.id.backButton)
+        movieRecyclerView = findViewById(R.id.movieRecyclerView)
+        movieAdapter = MovieAdapter(getMovies()) // Замените getMovies() на метод получения списка фильмов из API
 
-        backButton.setOnClickListener {
-            // Переадресация на экран WelcomeActivity
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
-        FetchMoviesTask().execute()
+        movieRecyclerView.layoutManager = LinearLayoutManager(this)
+        movieRecyclerView.adapter = movieAdapter
     }
 
-    private inner class FetchMoviesTask : AsyncTask<Void, Void, String>() {
-        override fun doInBackground(vararg params: Void?): String {
-            var connection: HttpURLConnection? = null
-            var reader: BufferedReader? = null
-            var result: String
+    // Метод для получения списка фильмов из API, вам нужно заменить его на свою реализацию
 
-            try {
-                val url = URL(API_URL)
-                connection = url.openConnection() as HttpURLConnection
-                connection.requestMethod = "GET"
-                connection.connect()
 
-                val stream = connection.inputStream
-                reader = BufferedReader(InputStreamReader(stream))
-                val builder = StringBuilder()
-
-                var line: String?
-                while (reader.readLine().also { line = it } != null) {
-                    builder.append(line)
-                }
-
-                result = builder.toString()
-            } catch (e: Exception) {
-                Log.e(TAG, "Error fetching movies: ${e.message}")
-                result = ""
-            } finally {
-                reader?.close()
-                connection?.disconnect()
-            }
-
-            return result
-        }
-
-        override fun onPostExecute(result: String) {
-            super.onPostExecute(result)
-
-            if (result.isNotEmpty()) {
-                try {
-                    val jsonObject = JSONObject(result)
-                    val moviesArray = jsonObject.getJSONArray("items")
-
-                    for (i in 0 until moviesArray.length()) {
-                        val movieObject = moviesArray.getJSONObject(i)
-                        val title = movieObject.getString("title")
-                        val year = movieObject.getString("year")
-                        val rating = movieObject.getString("imDbRating")
-                        val logoUrl = movieObject.getString("image")
-
-                        // Выводим информацию в консоль
-                        Log.d(TAG, "Title: $title")
-                        Log.d(TAG, "Year: $year")
-                        Log.d(TAG, "Rating: $rating")
-                        Log.d(TAG, "Logo URL: $logoUrl")
-                    }
-                } catch (e: Exception) {
-                    Log.e(TAG, "Error parsing JSON: ${e.message}")
-                }
-            }
-        }
-
+    private fun getMovies(): List<Movie> {
+        // Возвращайте список фильмов, полученных из API
+        // Пример:
+        return listOf(
+            Movie("1", "Фильм 1", "2021", "https://example.com/image1.jpg", "7.5"),
+            Movie("2", "Фильм 2", "2022", "https://example.com/image2.jpg", "8.0"),
+            Movie("3", "Фильм 3", "2023", "https://example.com/image3.jpg", "7.2")
+        )
     }
 }
