@@ -39,6 +39,11 @@
             android:label="@string/register_title"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
+        <activity
+            android:name=".MainPageActivity"
+            android:label="@string/MainPage"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
 
     </application>
 
