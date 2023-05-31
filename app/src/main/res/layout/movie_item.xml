@@ -97,7 +97,7 @@
                 android:layout_marginRight="4dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/baseline_star_border_24"
+                android:src="@drawable/baseline_done_outline_24"
                 tools:ignore="DuplicateIds,TouchTargetSizeCheck" />
 
         </LinearLayout>
@@ -193,7 +193,7 @@
                 android:layout_marginRight="4dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/baseline_star_border_24"
+                android:src="@drawable/baseline_done_outline_24"
                 tools:ignore="DuplicateIds,TouchTargetSizeCheck" />
 
         </LinearLayout>

@@ -115,10 +115,10 @@ class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<Movie
 
         holder.unstar.setOnClickListener {
             val currentImage = holder.unstar.drawable
-            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(it.context, R.drawable.baseline_star_border_24)?.constantState) {
-                ContextCompat.getDrawable(it.context, R.drawable.baseline_star_24)
+            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(it.context, R.drawable.baseline_done_outline_24)?.constantState) {
+                ContextCompat.getDrawable(it.context, R.drawable.baseline_done_24)
             } else {
-                ContextCompat.getDrawable(it.context, R.drawable.baseline_star_border_24)
+                ContextCompat.getDrawable(it.context, R.drawable.baseline_done_outline_24)
             }
             holder.unstar.setImageDrawable(newImage)
         }
@@ -145,10 +145,10 @@ class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<Movie
 
         holder.unstar2.setOnClickListener {
             val currentImage = holder.unstar2.drawable
-            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(it.context, R.drawable.baseline_star_border_24)?.constantState) {
-                ContextCompat.getDrawable(it.context, R.drawable.baseline_star_24)
+            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(it.context, R.drawable.baseline_done_outline_24)?.constantState) {
+                ContextCompat.getDrawable(it.context, R.drawable.baseline_done_24)
             } else {
-                ContextCompat.getDrawable(it.context, R.drawable.baseline_star_border_24)
+                ContextCompat.getDrawable(it.context, R.drawable.baseline_done_outline_24)
             }
             holder.unstar2.setImageDrawable(newImage)
         }
