@@ -26,7 +26,7 @@
         android:id="@+id/emailEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="10dp"
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"/>
@@ -35,7 +35,7 @@
         android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="10dp"
         android:hint="Password"
         android:inputType="textPassword"
         android:minHeight="48dp" />
@@ -44,16 +44,16 @@
         android:id="@+id/nicknameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_margin="10dp"
         android:hint="Nickname"
         android:inputType="text"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"/>
 
     <EditText
         android:id="@+id/phoneNumberEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_margin="10dp"
         android:hint="Phone"
         android:inputType="text"
         android:minHeight="48dp" />

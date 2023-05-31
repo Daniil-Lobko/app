@@ -1,10 +1,12 @@
 package com.example.digijet_android_app
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -13,6 +15,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,6 +37,7 @@ class MainPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     private lateinit var drawerToggle: ActionBarDrawerToggle
     private lateinit var drawerLayout: DrawerLayout
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_page)
@@ -69,6 +73,7 @@ class MainPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         closeButton.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.START)
         }
+
 
         // Create ActionBarDrawerToggle and attach it to the DrawerLayout
         drawerToggle = ActionBarDrawerToggle(
