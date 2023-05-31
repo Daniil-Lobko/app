@@ -12,6 +12,7 @@ import com.bumptech.glide.request.RequestOptions
 class WelcomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
 

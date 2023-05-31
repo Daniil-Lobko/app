@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.widget.CheckBox
+import android.widget.TextView
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth

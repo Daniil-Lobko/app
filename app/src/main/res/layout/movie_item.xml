@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:padding="8dp"
+
+    android:textColor="@color/text_color">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -17,26 +19,30 @@
             android:id="@+id/movieImageView1"
             android:layout_width="match_parent"
             android:layout_height="237dp"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            />
 
         <TextView
             android:id="@+id/titleTextView1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:gravity="center_horizontal"
+            android:fontFamily="@font/manrope_extrabold" />
 
         <TextView
             android:id="@+id/yearTextView1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:fontFamily="@font/manrope_medium"/>
 
         <TextView
             android:id="@+id/ratingTextView1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:fontFamily="@font/manrope_medium"/>
 
     </LinearLayout>
 
@@ -58,19 +64,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:gravity="center_horizontal"
+            android:fontFamily="@font/manrope_extrabold"  />
 
         <TextView
             android:id="@+id/yearTextView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:fontFamily="@font/manrope_medium"/>
 
         <TextView
             android:id="@+id/ratingTextView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:fontFamily="@font/manrope_medium"/>
 
     </LinearLayout>
 

@@ -6,5 +6,18 @@
         <item name="android:textColor">@color/text_color</item>
         <item name="android:textSize">20dp</item>
         <item name="android:fontFamily">@font/manrope_extrabold</item>
+        <item name="android:elevation">6dp</item>
+    </style>
+    <style name="BackButton" parent="Widget.AppCompat.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">Back</item>
+        <item name="android:fontFamily">@font/manrope_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:gravity">center</item>
+        <item name="android:drawableLeft">@drawable/baseline_keyboard_arrow_left_24</item>
+        <item name="android:background">@drawable/rounded_corners2</item>
+        <item name="android:drawablePadding">4dp</item>
     </style>
 </resources>

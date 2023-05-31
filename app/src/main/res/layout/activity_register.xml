@@ -4,29 +4,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/background"
     android:padding="16dp"
+    android:textColor="@color/text_color"
     tools:context=".RegisterActivity">
 
     <Button
         android:id="@+id/backButton"
-        android:layout_width="wrap_content"
+        style="@style/BackButton"/>
+
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Back" />
+        android:fontFamily="@font/manrope_extrabold"
+        android:gravity="center_horizontal"
+        android:text="Create an account"
+        android:layout_marginTop="80dp"
+        android:textSize="28sp" />
 
     <EditText
         android:id="@+id/emailEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_margin="16dp"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"/>
 
     <EditText
         android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_margin="16dp"
         android:hint="Password"
         android:inputType="textPassword"
         android:minHeight="48dp" />
@@ -53,6 +62,8 @@
         android:id="@+id/registerButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Register" />
+        android:text="Register"
+        style="@style/ButtonStyle"
+        android:background="@drawable/rounded_corners2"/>
 
 </LinearLayout>
