@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -18,21 +16,23 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
-import com.google.gson.Gson
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
-import okhttp3.Request
 
-class MainPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+    MovieAdapter.OnMovieClickListener {
 
     private lateinit var movieRecyclerView: RecyclerView
     private lateinit var movieAdapter: MovieAdapter
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var drawerToggle: ActionBarDrawerToggle
     private lateinit var drawerLayout: DrawerLayout
+    private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+
+    private var selectedMovieData: Movie? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,6 +89,7 @@ class MainPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
             // Создаем и устанавливаем адаптер с полученным списком фильмов
             movieAdapter = MovieAdapter(movies)
+            movieAdapter.setOnMovieClickListener(this@MainPageActivity)
             movieRecyclerView.layoutManager = LinearLayoutManager(this@MainPageActivity)
             movieRecyclerView.adapter = movieAdapter
         }
@@ -99,6 +100,39 @@ class MainPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         emailEditText.text = savedEmail
         nicknameEditText.text = savedNickname
 
+    }
+
+     override fun onMovieClick(movie: Movie) {
+        // Обработка клика на фильм
+        // Ваш код для вывода данных фильма в консоль или выполнения других действий
+
+         val savedUserId = sharedPreferences.getString("userId", null)
+         if (savedUserId != null) {
+             Log.d("savedUserId", savedUserId)
+         }
+         val selectedMovie = savedUserId?.let {
+             SelectedMovieData(
+                 userId = it,
+                 id = movie.id,
+                 title = movie.title,
+                 year = movie.year,
+                 image = movie.image,
+                 imDbRating = movie.imDbRating
+             )
+         }
+
+         val movieDocument = firestore.collection("favorite-movies").document()
+
+         // Устанавливаем значения полей фильма в документ
+         if (selectedMovie != null) {
+             movieDocument.set(selectedMovie)
+                 .addOnSuccessListener {
+                     Log.d("Firestore", "Фильм успешно сохранен в Firestore")
+                 }
+                 .addOnFailureListener { e ->
+                     Log.e("Firestore", "Ошибка при сохранении фильма в Firestore", e)
+                 }
+         }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

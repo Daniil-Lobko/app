@@ -16,8 +16,30 @@ data class Movie(
     val imDbRating: String
 )
 
+data class SelectedMovieData(
+    val userId : String,
+    val id: String,
+    val title: String,
+    val year: String,
+    val image: String,
+    val imDbRating: String
+)
+
 
 class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+
+    // Интерфейс для обработки кликов на фильмы
+    interface OnMovieClickListener {
+        fun onMovieClick(movie: Movie)
+    }
+
+    private var movieClickListener: OnMovieClickListener? = null
+
+    // Метод для установки слушателя кликов на фильмы
+    fun setOnMovieClickListener(listener: MainPageActivity) {
+        movieClickListener = listener
+    }
+
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val movieImageView1: ImageView = itemView.findViewById(R.id.movieImageView1)
@@ -52,6 +74,16 @@ class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<Movie
         holder.titleTextView2.text = movie2.title
         holder.yearTextView2.text = movie2.year
         holder.ratingTextView2.text = movie2.imDbRating
+
+        // Обработчик клика на первый фильм
+        holder.itemView.findViewById<View>(R.id.movieImageView1).setOnClickListener {
+            movieClickListener?.onMovieClick(movie1)
+        }
+
+        // Обработчик клика на второй фильм
+        holder.itemView.findViewById<View>(R.id.movieImageView2).setOnClickListener {
+            movieClickListener?.onMovieClick(movie2)
+        }
     }
 
 

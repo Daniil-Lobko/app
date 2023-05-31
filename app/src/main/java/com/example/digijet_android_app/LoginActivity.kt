@@ -11,6 +11,12 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.widget.CheckBox
 import android.widget.TextView
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth
@@ -71,15 +77,63 @@ class LoginActivity : AppCompatActivity() {
                     Log.d(TAG, "loginWithEmail:success")
                     // Здесь можно перейти на другую активити после успешного входа
 
-                    val intent = Intent(this, MainPageActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                    val editor = sharedPreferences.edit()
+                    editor.putString("email", email)
+                    editor.putString("password", password)
+                    editor.putBoolean("rememberMe", true)
+                    editor.apply()
 
+                    // Вызов функции getUserParams в корутине
+                    GlobalScope.launch {
+                        val nickname = getUserParamByEmail(email, "nickname")
+                        val userId = getUserParamByEmail(email, "userId")
+
+                        // Сохранение полученных значений
+                        withContext(Dispatchers.Main) {
+                            editor.putString("nickname", nickname)
+                            editor.putString("userId", userId)
+                            editor.apply()
+
+                            val savedNickname = sharedPreferences.getString("nickname", null)
+                            val savedUserId = sharedPreferences.getString("userId", null)
+                            if (savedNickname != null) {
+                                Log.d("nickname", savedNickname)
+                            }
+                            if (savedUserId != null) {
+                                Log.d("userId", savedUserId)
+                            }
+
+                            val intent = Intent(this@LoginActivity, MainPageActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                    }
                 } else {
                     Log.w(TAG, "loginWithEmail:failure", task.exception)
                     // Здесь можно обработать ошибку входа
                 }
             }
+    }
+
+
+    private suspend fun getUserParamByEmail(email: String, param: String): String? = withContext(Dispatchers.IO) {
+        val firestore = FirebaseFirestore.getInstance()
+        val querySnapshot = firestore.collection("users")
+            .whereEqualTo("email", email)
+            .limit(1)
+            .get()
+            .await()
+
+        if (querySnapshot.isEmpty) {
+            // Если запрос не вернул результатов, значит пользователя с таким email нет
+            return@withContext null
+        }
+
+        // Получаем первый документ из результатов запроса
+        val userDocument = querySnapshot.documents.first()
+
+        // Возвращаем значение поля "userId" из документа
+        return@withContext userDocument.getString(param)
     }
 
     companion object {
