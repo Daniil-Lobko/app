@@ -44,11 +44,16 @@ class MainPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         movieRecyclerView = findViewById(R.id.movieRecyclerView)
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
-//        val savedUserId = sharedPreferences.getString("userId", null)
+        val savedUserId = sharedPreferences.getString("userId", null)
         val savedNickname = sharedPreferences.getString("nickname", null)
         val savedEmail = sharedPreferences.getString("email", null)
 
-
+        val menuHome = navigationView.findViewById<LinearLayout>(R.id.menu_home)
+        menuHome.setOnClickListener {
+            if (savedUserId != null) {
+                Log.d("userId:", savedUserId)
+            };
+        }
 
         val menuLogout = navigationView.findViewById<LinearLayout>(R.id.menu_logout)
         menuLogout.setOnClickListener {
