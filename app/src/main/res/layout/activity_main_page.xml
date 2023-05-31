@@ -102,6 +102,7 @@
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/nicknameText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Your Nickname"
@@ -109,6 +110,7 @@
 
             <!-- Почта -->
             <TextView
+                android:id="@+id/emailText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="your.email@example.com"
