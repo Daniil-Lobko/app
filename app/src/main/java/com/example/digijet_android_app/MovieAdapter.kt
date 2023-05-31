@@ -93,8 +93,6 @@ class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<Movie
         holder.itemView.findViewById<View>(R.id.movieImageView2).setOnClickListener {
             movieClickListener?.onMovieClick(movie2)
         }
-    }
-
         holder.addFavorites.setOnClickListener {
             val currentImage = holder.addFavorites.drawable
             val newImage = if (currentImage.constantState == ContextCompat.getDrawable(it.context, R.drawable.baseline_favorite_border_24)?.constantState) {
