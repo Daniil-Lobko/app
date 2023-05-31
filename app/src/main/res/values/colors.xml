@@ -12,4 +12,6 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="lavender">#8692f7</color>
+    <color name="transparent_black">#80000000</color>
+    <color name="dark_overlay">#80000000</color>
 </resources>

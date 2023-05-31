@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="textView" type="id" />
+    <item name="menu_logout" type="id" />
+    <item name="menu_home" type="id" />
+    <item name="emailText" type="id" />
+    <item name="nicknameText" type="id" />
+    <item name="closeButton" type="id" />
+    <item name="navigationView" type="id" />
 </resources>
