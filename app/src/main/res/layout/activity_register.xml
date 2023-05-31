@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:hint="Password"
+        android:hint="Password (more than 6)"
         android:inputType="textPassword"
         android:minHeight="48dp" />
 
@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:hint="Phone"
-        android:inputType="text"
+        android:inputType="phone"
         android:minHeight="48dp" />
 
     <Button

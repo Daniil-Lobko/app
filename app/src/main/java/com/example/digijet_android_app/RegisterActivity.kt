@@ -7,8 +7,11 @@ import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.firestore.FirebaseFirestore
 
 class RegisterActivity : AppCompatActivity() {
@@ -47,18 +50,44 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun register(email: String, password: String, nickname: String, phoneNumber: String) {
+
+        // Password length validation
+        if (password.length < 6) {
+            Toast.makeText(this, "Password must be at least 6 characters long", Toast.LENGTH_SHORT)
+                .show()
+            return
+        }
+
+        // Phone number validation
+        if (phoneNumber.length < 10) {
+            Toast.makeText(this, "Invalid phone number", Toast.LENGTH_SHORT).show()
+            return
+        }
+        // Nickname validation
+        if (nickname.isEmpty()) {
+            Toast.makeText(this, "Nickname cannot be empty", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+                    // Registration success
                     Log.d(TAG, "registerWithEmail:success")
                     val firebaseUser = task.result?.user
 
-                    // Сохраняем данные пользователя в Cloud Firestore
-                    saveUserDataToFirestore(email, password, firebaseUser?.uid, nickname, phoneNumber)
+                    // Save user data to Cloud Firestore
+                    saveUserDataToFirestore(
+                        email,
+                        password,
+                        firebaseUser?.uid,
+                        nickname,
+                        phoneNumber
+                    )
 
                     firebaseUser?.uid?.let { Log.d("firebaseUser", it) }
 
-                    // Сохраняем данные сессии юзера
+                    // Save user session data
                     sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
                     val editor = sharedPreferences.edit()
                     editor.putString("email", email)
@@ -69,19 +98,32 @@ class RegisterActivity : AppCompatActivity() {
                     editor.putBoolean("rememberMe", true)
                     editor.apply()
 
-                    // Здесь можно перейти на другую активити после успешной регистрации
+                    // Navigate to another activity after successful registration
                     val intent = Intent(this, MainPageActivity::class.java)
                     startActivity(intent)
                     finish()
 
                 } else {
+                    // Registration failed
                     Log.w(TAG, "registerWithEmail:failure", task.exception)
-                    // Здесь можно обработать ошибку регистрации
+                    val exception = task.exception
+                    val errorMessage: String = when (exception) {
+                        is FirebaseAuthUserCollisionException -> "The email address is already in use"
+                        is FirebaseAuthInvalidCredentialsException -> "An invalid email format"
+                        else -> "Registration failed"
+                    }
+                    Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
                 }
             }
     }
 
-    private fun saveUserDataToFirestore(email: String, password: String, userId: String?, nickname: String, phoneNumber: String) {
+    private fun saveUserDataToFirestore(
+        email: String,
+        password: String,
+        userId: String?,
+        nickname: String,
+        phoneNumber: String
+    ) {
         val firestore = FirebaseFirestore.getInstance()
         val userCollection = firestore.collection("users")
         val userDocument = userCollection.document(userId ?: "")
