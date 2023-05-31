@@ -56,6 +56,8 @@ class RegisterActivity : AppCompatActivity() {
                     // Сохраняем данные пользователя в Cloud Firestore
                     saveUserDataToFirestore(email, password, firebaseUser?.uid, nickname, phoneNumber)
 
+                    firebaseUser?.uid?.let { Log.d("firebaseUser", it) }
+
                     // Сохраняем данные сессии юзера
                     sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
                     val editor = sharedPreferences.edit()
