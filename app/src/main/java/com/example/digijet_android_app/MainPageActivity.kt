@@ -5,9 +5,12 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.MenuItem
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -38,6 +41,14 @@ class MainPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         // Setup navigation drawer
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
         val navigationView = findViewById<NavigationView>(R.id.navigationView)
+        movieRecyclerView = findViewById(R.id.movieRecyclerView)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+
+//        val savedUserId = sharedPreferences.getString("userId", null)
+        val savedNickname = sharedPreferences.getString("nickname", null)
+        val savedEmail = sharedPreferences.getString("email", null)
+
+
 
         val menuLogout = navigationView.findViewById<LinearLayout>(R.id.menu_logout)
         menuLogout.setOnClickListener {
@@ -67,9 +78,6 @@ class MainPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         // Enable the Up button
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        movieRecyclerView = findViewById(R.id.movieRecyclerView)
-
         // Используем корутины для выполнения сетевого запроса
         GlobalScope.launch(Dispatchers.Main) {
             val movies = fetchMovies()
@@ -79,6 +87,13 @@ class MainPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             movieRecyclerView.layoutManager = LinearLayoutManager(this@MainPageActivity)
             movieRecyclerView.adapter = movieAdapter
         }
+
+        val emailEditText: TextView = findViewById(R.id.emailText)
+        val nicknameEditText: TextView = findViewById(R.id.nicknameText)
+
+        emailEditText.text = savedEmail
+        nicknameEditText.text = savedNickname
+
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

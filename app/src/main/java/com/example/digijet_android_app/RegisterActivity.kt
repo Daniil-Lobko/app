@@ -61,6 +61,9 @@ class RegisterActivity : AppCompatActivity() {
                     val editor = sharedPreferences.edit()
                     editor.putString("email", email)
                     editor.putString("password", password)
+                    editor.putString("userId", firebaseUser?.uid)
+                    editor.putString("nickname", nickname)
+                    editor.putString("phoneNumber", phoneNumber)
                     editor.putBoolean("rememberMe", true)
                     editor.apply()
 
@@ -83,6 +86,7 @@ class RegisterActivity : AppCompatActivity() {
         val userData = hashMapOf(
             "email" to email,
             "password" to password,
+            "userId" to userId,
             "nickname" to nickname,
             "phoneNumber" to phoneNumber
         )
