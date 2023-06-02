@@ -14,4 +14,7 @@
     <color name="lavender">#8692f7</color>
     <color name="transparent_black">#80000000</color>
     <color name="dark_overlay">#80000000</color>
+    <color name="red">#80CD2626</color>
+    <color name="less_bright_green">#367838</color>
+    <color name="yellow">#FFB6A615</color>
 </resources>

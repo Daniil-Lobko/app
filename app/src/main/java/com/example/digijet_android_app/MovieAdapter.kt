@@ -1,5 +1,7 @@
 package com.example.digijet_android_app
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -80,7 +82,31 @@ class MovieAdapter(private val movies: List<Movie>) :
         // Установка названия, года и рейтинга фильма
         holder.titleTextView1.text = movie1.title
         holder.yearTextView1.text = movie1.year
+
+        @SuppressLint("ResourceAsColor")
+        fun setRatingBackgroundColor(textView: TextView, rating: Float) {
+            when {
+                rating < 5 -> {
+                    textView.setBackgroundColor(Color.parseColor("#80CD2626"))
+                }
+
+                rating >= 5 && rating < 8 -> {
+                    textView.setBackgroundColor(Color.parseColor("#FFB6A615"))
+                }
+
+                rating >= 8 && rating <= 10 -> {
+                    textView.setBackgroundColor(Color.parseColor("#367838"))
+                }
+            }
+        }
+
+        val rating1 = movie1.imDbRating.toFloat()
+        setRatingBackgroundColor(holder.ratingTextView1, rating1)
         holder.ratingTextView1.text = movie1.imDbRating
+
+        val rating2 = movie2.imDbRating.toFloat()
+        setRatingBackgroundColor(holder.ratingTextView2, rating2)
+        holder.ratingTextView2.text = movie2.imDbRating
 
         holder.titleTextView2.text = movie2.title
         holder.yearTextView2.text = movie2.year

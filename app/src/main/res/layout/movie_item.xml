@@ -24,6 +24,7 @@
             android:fontFamily="@font/manrope_extrabold"
             android:gravity="center_horizontal"
             android:minHeight="53dp"
+            android:maxHeight="53dp"
             android:textSize="18sp" />
 
         <RelativeLayout
@@ -42,10 +43,14 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_margin="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/manrope_extrabold"
                 android:background="@drawable/rounded_corners2"
                 android:padding="3dp"
-                android:textColor="@color/text_color"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
 
         </RelativeLayout>
@@ -66,15 +71,16 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/unstar"
+                android:id="@+id/addFavorites"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/baseline_done_outline_24"
-                tools:ignore="DuplicateIds,TouchTargetSizeCheck" />
+                android:src="@drawable/baseline_favorite_border_24"
+                tools:ignore="TouchTargetSizeCheck" />
+
 
             <ImageButton
                 android:id="@+id/unwatched"
@@ -87,16 +93,17 @@
                 android:src="@drawable/baseline_remove_red_eye_24"
                 tools:ignore="TouchTargetSizeCheck" />
 
+
             <ImageButton
-                android:id="@+id/addFavorites"
+                android:id="@+id/unstar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/baseline_favorite_border_24"
-                tools:ignore="TouchTargetSizeCheck" />
+                android:src="@drawable/baseline_star_border_24"
+                tools:ignore="DuplicateIds,TouchTargetSizeCheck" />
 
         </LinearLayout>
 
@@ -121,11 +128,33 @@
             android:minHeight="53dp"
             android:textSize="18sp" />
 
-        <ImageView
-            android:id="@+id/movieImageView2"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="237dp"
-            android:scaleType="centerCrop" />
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/movieImageView2"
+                android:layout_width="match_parent"
+                android:layout_height="237dp"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/ratingTextView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/manrope_extrabold"
+                android:background="@drawable/rounded_corners2"
+                android:padding="3dp"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -138,17 +167,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/manrope_medium"
-                android:gravity="start"
+                android:gravity="center"
                 android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/ratingTextView2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/manrope_medium"
-                android:gravity="end"
-                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -158,28 +179,6 @@
             android:layout_alignParentEnd="true"
             android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/unstar2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                android:src="@drawable/baseline_done_outline_24"
-                tools:ignore="DuplicateIds,TouchTargetSizeCheck" />
-
-            <ImageButton
-                android:id="@+id/unwatched2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                android:src="@drawable/baseline_remove_red_eye_24"
-                tools:ignore="DuplicateIds,TouchTargetSizeCheck" />
 
             <ImageButton
                 android:id="@+id/addFavorites2"
@@ -192,8 +191,34 @@
                 android:src="@drawable/baseline_favorite_border_24"
                 tools:ignore="DuplicateIds,TouchTargetSizeCheck" />
 
+
+            <ImageButton
+                android:id="@+id/unwatched2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/baseline_remove_red_eye_24"
+                tools:ignore="DuplicateIds,TouchTargetSizeCheck" />
+
+
+            <ImageButton
+                android:id="@+id/unstar2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/baseline_star_border_24"
+                tools:ignore="DuplicateIds,TouchTargetSizeCheck" />
+
         </LinearLayout>
 
     </LinearLayout>
 
 </LinearLayout>
+
+
