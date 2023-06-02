@@ -1,5 +1,7 @@
 package com.example.digijet_android_app
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +21,7 @@ data class Movie(
 )
 
 data class SelectedMovieData(
-    val userId : String,
+    val userId: String,
     val id: String,
     val title: String,
     val year: String,
@@ -28,7 +30,8 @@ data class SelectedMovieData(
 )
 
 
-class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter(private val movies: List<Movie>) :
+    RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     // Интерфейс для обработки кликов на фильмы
     interface OnMovieClickListener {
@@ -63,7 +66,8 @@ class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<Movie
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
         return MovieViewHolder(itemView)
     }
 
@@ -78,11 +82,34 @@ class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<Movie
         // Установка названия, года и рейтинга фильма
         holder.titleTextView1.text = movie1.title
         holder.yearTextView1.text = movie1.year
+
+        @SuppressLint("ResourceAsColor")
+        fun setRatingBackgroundColor(textView: TextView, rating: Float) {
+            when {
+                rating < 5 -> {
+                    textView.setBackgroundColor(Color.parseColor("#80CD2626"))
+                }
+
+                rating >= 5 && rating < 8 -> {
+                    textView.setBackgroundColor(Color.parseColor("#FFB6A615"))
+                }
+
+                rating >= 8 && rating <= 10 -> {
+                    textView.setBackgroundColor(Color.parseColor("#367838"))
+                }
+            }
+        }
+
+        val rating1 = movie1.imDbRating.toFloat()
+        setRatingBackgroundColor(holder.ratingTextView1, rating1)
         holder.ratingTextView1.text = movie1.imDbRating
+
+        val rating2 = movie2.imDbRating.toFloat()
+        setRatingBackgroundColor(holder.ratingTextView2, rating2)
+        holder.ratingTextView2.text = movie2.imDbRating
 
         holder.titleTextView2.text = movie2.title
         holder.yearTextView2.text = movie2.year
-        holder.ratingTextView2.text = movie2.imDbRating
 
         // Обработчик клика на первый фильм
         holder.itemView.findViewById<View>(R.id.movieImageView1).setOnClickListener {
@@ -95,7 +122,11 @@ class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<Movie
         }
         holder.addFavorites.setOnClickListener {
             val currentImage = holder.addFavorites.drawable
-            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(it.context, R.drawable.baseline_favorite_border_24)?.constantState) {
+            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(
+                    it.context,
+                    R.drawable.baseline_favorite_border_24
+                )?.constantState
+            ) {
                 ContextCompat.getDrawable(it.context, R.drawable.baseline_favorite_24)
             } else {
                 ContextCompat.getDrawable(it.context, R.drawable.baseline_favorite_border_24)
@@ -105,7 +136,11 @@ class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<Movie
 
         holder.unwatched.setOnClickListener {
             val currentImage = holder.unwatched.drawable
-            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(it.context, R.drawable.baseline_remove_red_eye_24)?.constantState) {
+            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(
+                    it.context,
+                    R.drawable.baseline_remove_red_eye_24
+                )?.constantState
+            ) {
                 ContextCompat.getDrawable(it.context, R.drawable.baseline_remove_eye_24)
             } else {
                 ContextCompat.getDrawable(it.context, R.drawable.baseline_remove_red_eye_24)
@@ -115,7 +150,11 @@ class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<Movie
 
         holder.unstar.setOnClickListener {
             val currentImage = holder.unstar.drawable
-            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(it.context, R.drawable.baseline_star_border_24)?.constantState) {
+            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(
+                    it.context,
+                    R.drawable.baseline_star_border_24
+                )?.constantState
+            ) {
                 ContextCompat.getDrawable(it.context, R.drawable.baseline_star_24)
             } else {
                 ContextCompat.getDrawable(it.context, R.drawable.baseline_star_border_24)
@@ -125,7 +164,11 @@ class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<Movie
 
         holder.addFavorites2.setOnClickListener {
             val currentImage = holder.addFavorites2.drawable
-            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(it.context, R.drawable.baseline_favorite_border_24)?.constantState) {
+            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(
+                    it.context,
+                    R.drawable.baseline_favorite_border_24
+                )?.constantState
+            ) {
                 ContextCompat.getDrawable(it.context, R.drawable.baseline_favorite_24)
             } else {
                 ContextCompat.getDrawable(it.context, R.drawable.baseline_favorite_border_24)
@@ -135,7 +178,11 @@ class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<Movie
 
         holder.unwatched2.setOnClickListener {
             val currentImage = holder.unwatched2.drawable
-            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(it.context, R.drawable.baseline_remove_red_eye_24)?.constantState) {
+            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(
+                    it.context,
+                    R.drawable.baseline_remove_red_eye_24
+                )?.constantState
+            ) {
                 ContextCompat.getDrawable(it.context, R.drawable.baseline_remove_eye_24)
             } else {
                 ContextCompat.getDrawable(it.context, R.drawable.baseline_remove_red_eye_24)
@@ -145,7 +192,11 @@ class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<Movie
 
         holder.unstar2.setOnClickListener {
             val currentImage = holder.unstar2.drawable
-            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(it.context, R.drawable.baseline_star_border_24)?.constantState) {
+            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(
+                    it.context,
+                    R.drawable.baseline_star_border_24
+                )?.constantState
+            ) {
                 ContextCompat.getDrawable(it.context, R.drawable.baseline_star_24)
             } else {
                 ContextCompat.getDrawable(it.context, R.drawable.baseline_star_border_24)
