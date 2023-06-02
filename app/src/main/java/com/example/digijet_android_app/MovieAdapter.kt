@@ -19,7 +19,7 @@ data class Movie(
 )
 
 data class SelectedMovieData(
-    val userId : String,
+    val userId: String,
     val id: String,
     val title: String,
     val year: String,
@@ -28,7 +28,8 @@ data class SelectedMovieData(
 )
 
 
-class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter(private val movies: List<Movie>) :
+    RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     // Интерфейс для обработки кликов на фильмы
     interface OnMovieClickListener {
@@ -63,7 +64,8 @@ class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<Movie
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
         return MovieViewHolder(itemView)
     }
 
@@ -95,7 +97,11 @@ class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<Movie
         }
         holder.addFavorites.setOnClickListener {
             val currentImage = holder.addFavorites.drawable
-            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(it.context, R.drawable.baseline_favorite_border_24)?.constantState) {
+            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(
+                    it.context,
+                    R.drawable.baseline_favorite_border_24
+                )?.constantState
+            ) {
                 ContextCompat.getDrawable(it.context, R.drawable.baseline_favorite_24)
             } else {
                 ContextCompat.getDrawable(it.context, R.drawable.baseline_favorite_border_24)
@@ -105,7 +111,11 @@ class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<Movie
 
         holder.unwatched.setOnClickListener {
             val currentImage = holder.unwatched.drawable
-            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(it.context, R.drawable.baseline_remove_red_eye_24)?.constantState) {
+            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(
+                    it.context,
+                    R.drawable.baseline_remove_red_eye_24
+                )?.constantState
+            ) {
                 ContextCompat.getDrawable(it.context, R.drawable.baseline_remove_eye_24)
             } else {
                 ContextCompat.getDrawable(it.context, R.drawable.baseline_remove_red_eye_24)
@@ -115,17 +125,25 @@ class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<Movie
 
         holder.unstar.setOnClickListener {
             val currentImage = holder.unstar.drawable
-            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(it.context, R.drawable.baseline_star_border_24)?.constantState) {
-                ContextCompat.getDrawable(it.context, R.drawable.baseline_star_24)
+            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(
+                    it.context,
+                    R.drawable.baseline_done_outline_24
+                )?.constantState
+            ) {
+                ContextCompat.getDrawable(it.context, R.drawable.baseline_done_24)
             } else {
-                ContextCompat.getDrawable(it.context, R.drawable.baseline_star_border_24)
+                ContextCompat.getDrawable(it.context, R.drawable.baseline_done_outline_24)
             }
             holder.unstar.setImageDrawable(newImage)
         }
 
         holder.addFavorites2.setOnClickListener {
             val currentImage = holder.addFavorites2.drawable
-            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(it.context, R.drawable.baseline_favorite_border_24)?.constantState) {
+            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(
+                    it.context,
+                    R.drawable.baseline_favorite_border_24
+                )?.constantState
+            ) {
                 ContextCompat.getDrawable(it.context, R.drawable.baseline_favorite_24)
             } else {
                 ContextCompat.getDrawable(it.context, R.drawable.baseline_favorite_border_24)
@@ -135,7 +153,11 @@ class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<Movie
 
         holder.unwatched2.setOnClickListener {
             val currentImage = holder.unwatched2.drawable
-            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(it.context, R.drawable.baseline_remove_red_eye_24)?.constantState) {
+            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(
+                    it.context,
+                    R.drawable.baseline_remove_red_eye_24
+                )?.constantState
+            ) {
                 ContextCompat.getDrawable(it.context, R.drawable.baseline_remove_eye_24)
             } else {
                 ContextCompat.getDrawable(it.context, R.drawable.baseline_remove_red_eye_24)
@@ -145,10 +167,14 @@ class MovieAdapter(private val movies: List<Movie>) : RecyclerView.Adapter<Movie
 
         holder.unstar2.setOnClickListener {
             val currentImage = holder.unstar2.drawable
-            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(it.context, R.drawable.baseline_star_border_24)?.constantState) {
-                ContextCompat.getDrawable(it.context, R.drawable.baseline_star_24)
+            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(
+                    it.context,
+                    R.drawable.baseline_done_outline_24
+                )?.constantState
+            ) {
+                ContextCompat.getDrawable(it.context, R.drawable.baseline_done_24)
             } else {
-                ContextCompat.getDrawable(it.context, R.drawable.baseline_star_border_24)
+                ContextCompat.getDrawable(it.context, R.drawable.baseline_done_outline_24)
             }
             holder.unstar2.setImageDrawable(newImage)
         }
