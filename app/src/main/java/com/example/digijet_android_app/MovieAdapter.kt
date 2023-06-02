@@ -121,89 +121,34 @@ class MovieAdapter(private val movies: List<Movie>) :
         holder.itemView.findViewById<View>(R.id.movieImageView2).setOnClickListener {
             movieClickListener?.onMovieClick(movie2)
         }
-        holder.addFavorites.setOnClickListener {
-            val currentImage = holder.addFavorites.drawable
-            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(
-                    it.context,
-                    R.drawable.baseline_favorite_border_24
-                )?.constantState
-            ) {
-                ContextCompat.getDrawable(it.context, R.drawable.baseline_favorite_24)
-            } else {
-                ContextCompat.getDrawable(it.context, R.drawable.baseline_favorite_border_24)
+
+        fun setClickListenerAndImage(
+            view: ImageView,
+            borderDrawable: Int,
+            filledDrawable: Int
+        ) {
+            view.setOnClickListener {
+                val currentImage = view.drawable
+                val newImage = if (currentImage.constantState == ContextCompat.getDrawable(
+                        it.context,
+                        borderDrawable
+                    )?.constantState
+                ) {
+                    ContextCompat.getDrawable(it.context, filledDrawable)
+                } else {
+                    ContextCompat.getDrawable(it.context, borderDrawable)
+                }
+                view.setImageDrawable(newImage)
             }
-            holder.addFavorites.setImageDrawable(newImage)
         }
 
-        holder.unwatched.setOnClickListener {
-            val currentImage = holder.unwatched.drawable
-            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(
-                    it.context,
-                    R.drawable.baseline_remove_red_eye_24
-                )?.constantState
-            ) {
-                ContextCompat.getDrawable(it.context, R.drawable.baseline_remove_eye_24)
-            } else {
-                ContextCompat.getDrawable(it.context, R.drawable.baseline_remove_red_eye_24)
-            }
-            holder.unwatched.setImageDrawable(newImage)
-        }
+        setClickListenerAndImage(holder.addFavorites, R.drawable.baseline_favorite_border_24, R.drawable.baseline_favorite_24)
+        setClickListenerAndImage(holder.unwatched, R.drawable.baseline_remove_red_eye_24, R.drawable.baseline_remove_eye_24)
+        setClickListenerAndImage(holder.unstar, R.drawable.baseline_done_outline_24, R.drawable.baseline_done_24)
 
-        holder.unstar.setOnClickListener {
-            val currentImage = holder.unstar.drawable
-            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(
-                    it.context,
-                    R.drawable.baseline_done_outline_24
-                )?.constantState
-            ) {
-                ContextCompat.getDrawable(it.context, R.drawable.baseline_done_24)
-            } else {
-                ContextCompat.getDrawable(it.context, R.drawable.baseline_done_outline_24)
-            }
-            holder.unstar.setImageDrawable(newImage)
-        }
-
-        holder.addFavorites2.setOnClickListener {
-            val currentImage = holder.addFavorites2.drawable
-            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(
-                    it.context,
-                    R.drawable.baseline_favorite_border_24
-                )?.constantState
-            ) {
-                ContextCompat.getDrawable(it.context, R.drawable.baseline_favorite_24)
-            } else {
-                ContextCompat.getDrawable(it.context, R.drawable.baseline_favorite_border_24)
-            }
-            holder.addFavorites2.setImageDrawable(newImage)
-        }
-
-        holder.unwatched2.setOnClickListener {
-            val currentImage = holder.unwatched2.drawable
-            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(
-                    it.context,
-                    R.drawable.baseline_remove_red_eye_24
-                )?.constantState
-            ) {
-                ContextCompat.getDrawable(it.context, R.drawable.baseline_remove_eye_24)
-            } else {
-                ContextCompat.getDrawable(it.context, R.drawable.baseline_remove_red_eye_24)
-            }
-            holder.unwatched2.setImageDrawable(newImage)
-        }
-
-        holder.unstar2.setOnClickListener {
-            val currentImage = holder.unstar2.drawable
-            val newImage = if (currentImage.constantState == ContextCompat.getDrawable(
-                    it.context,
-                    R.drawable.baseline_done_outline_24
-                )?.constantState
-            ) {
-                ContextCompat.getDrawable(it.context, R.drawable.baseline_done_24)
-            } else {
-                ContextCompat.getDrawable(it.context, R.drawable.baseline_done_outline_24)
-            }
-            holder.unstar2.setImageDrawable(newImage)
-        }
+        setClickListenerAndImage(holder.addFavorites2, R.drawable.baseline_favorite_border_24, R.drawable.baseline_favorite_24)
+        setClickListenerAndImage(holder.unwatched2, R.drawable.baseline_remove_red_eye_24, R.drawable.baseline_remove_eye_24)
+        setClickListenerAndImage(holder.unstar2, R.drawable.baseline_done_outline_24, R.drawable.baseline_done_24)
     }
 
     override fun getItemCount(): Int {

@@ -102,37 +102,37 @@ class MainPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
     }
 
-     override fun onMovieClick(movie: Movie) {
+    override fun onMovieClick(movie: Movie) {
         // Обработка клика на фильм
         // Ваш код для вывода данных фильма в консоль или выполнения других действий
 
-         val savedUserId = sharedPreferences.getString("userId", null)
-         if (savedUserId != null) {
-             Log.d("savedUserId", savedUserId)
-         }
-         val selectedMovie = savedUserId?.let {
-             SelectedMovieData(
-                 userId = it,
-                 id = movie.id,
-                 title = movie.title,
-                 year = movie.year,
-                 image = movie.image,
-                 imDbRating = movie.imDbRating
-             )
-         }
+        val savedUserId = sharedPreferences.getString("userId", null)
+        if (savedUserId != null) {
+            Log.d("savedUserId", savedUserId)
+        }
+        val selectedMovie = savedUserId?.let {
+            SelectedMovieData(
+                userId = it,
+                id = movie.id,
+                title = movie.title,
+                year = movie.year,
+                image = movie.image,
+                imDbRating = movie.imDbRating
+            )
+        }
 
-         val movieDocument = firestore.collection("favorite-movies").document()
+        val movieDocument = firestore.collection("favorite-movies").document()
 
-         // Устанавливаем значения полей фильма в документ
-         if (selectedMovie != null) {
-             movieDocument.set(selectedMovie)
-                 .addOnSuccessListener {
-                     Log.d("Firestore", "Фильм успешно сохранен в Firestore")
-                 }
-                 .addOnFailureListener { e ->
-                     Log.e("Firestore", "Ошибка при сохранении фильма в Firestore", e)
-                 }
-         }
+        // Устанавливаем значения полей фильма в документ
+        if (selectedMovie != null) {
+            movieDocument.set(selectedMovie)
+                .addOnSuccessListener {
+                    Log.d("Firestore", "Фильм успешно сохранен в Firestore")
+                }
+                .addOnFailureListener { e ->
+                    Log.e("Firestore", "Ошибка при сохранении фильма в Firestore", e)
+                }
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
