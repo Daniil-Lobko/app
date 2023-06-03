@@ -22,8 +22,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MainPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
-    MovieAdapter.OnMovieClickListener {
+class MainPageActivity : AppCompatActivity(), MovieAdapter.OnMovieClickListener {
 
     private lateinit var movieRecyclerView: RecyclerView
     private lateinit var movieAdapter: MovieAdapter
@@ -70,6 +69,11 @@ class MainPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             drawerLayout.closeDrawer(GravityCompat.START)
         }
 
+        val menu_home = findViewById<LinearLayout>(R.id.menu_home)
+        menu_home.setOnClickListener {
+            drawerLayout.closeDrawer(GravityCompat.START)
+        }
+
         // Create ActionBarDrawerToggle and attach it to the DrawerLayout
         drawerToggle = ActionBarDrawerToggle(
             this,
@@ -102,46 +106,37 @@ class MainPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
     }
 
-     override fun onMovieClick(movie: Movie) {
+    override fun onMovieClick(movie: Movie) {
         // Обработка клика на фильм
         // Ваш код для вывода данных фильма в консоль или выполнения других действий
 
-         val savedUserId = sharedPreferences.getString("userId", null)
-         if (savedUserId != null) {
-             Log.d("savedUserId", savedUserId)
-         }
-         val selectedMovie = savedUserId?.let {
-             SelectedMovieData(
-                 userId = it,
-                 id = movie.id,
-                 title = movie.title,
-                 year = movie.year,
-                 image = movie.image,
-                 imDbRating = movie.imDbRating
-             )
-         }
-
-         val movieDocument = firestore.collection("favorite-movies").document()
-
-         // Устанавливаем значения полей фильма в документ
-         if (selectedMovie != null) {
-             movieDocument.set(selectedMovie)
-                 .addOnSuccessListener {
-                     Log.d("Firestore", "Фильм успешно сохранен в Firestore")
-                 }
-                 .addOnFailureListener { e ->
-                     Log.e("Firestore", "Ошибка при сохранении фильма в Firestore", e)
-                 }
-         }
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.menu_logout -> logout()
+        val savedUserId = sharedPreferences.getString("userId", null)
+        if (savedUserId != null) {
+            Log.d("savedUserId", savedUserId)
         }
-        // Close the navigation drawer after an item is selected
-        drawerLayout.closeDrawer(GravityCompat.START)
-        return true
+        val selectedMovie = savedUserId?.let {
+            SelectedMovieData(
+                userId = it,
+                id = movie.id,
+                title = movie.title,
+                year = movie.year,
+                image = movie.image,
+                imDbRating = movie.imDbRating
+            )
+        }
+
+        val movieDocument = firestore.collection("favorite-movies").document()
+
+        // Устанавливаем значения полей фильма в документ
+        if (selectedMovie != null) {
+            movieDocument.set(selectedMovie)
+                .addOnSuccessListener {
+                    Log.d("Firestore", "Фильм успешно сохранен в Firestore")
+                }
+                .addOnFailureListener { e ->
+                    Log.e("Firestore", "Ошибка при сохранении фильма в Firestore", e)
+                }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

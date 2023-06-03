@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.util.Log
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -93,6 +95,26 @@ class Utils {
             Log.d("Movie4:", movies[3].toString())
 
             return movies
+        }
+
+        fun setClickListenerAndImage(
+            view: ImageView,
+            borderDrawable: Int,
+            filledDrawable: Int
+        ) {
+            view.setOnClickListener {
+                val currentImage = view.drawable
+                val newImage = if (currentImage.constantState == ContextCompat.getDrawable(
+                        it.context,
+                        borderDrawable
+                    )?.constantState
+                ) {
+                    ContextCompat.getDrawable(it.context, filledDrawable)
+                } else {
+                    ContextCompat.getDrawable(it.context, borderDrawable)
+                }
+                view.setImageDrawable(newImage)
+            }
         }
     }
 }
