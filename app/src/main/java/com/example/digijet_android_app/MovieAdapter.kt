@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.digijet_android_app.Utils.Companion.setClickListenerAndImage
 import com.squareup.picasso.Picasso
 
 data class Movie(
@@ -29,7 +30,6 @@ data class SelectedMovieData(
     val imDbRating: String
 )
 
-
 class MovieAdapter(private val movies: List<Movie>) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
@@ -44,7 +44,6 @@ class MovieAdapter(private val movies: List<Movie>) :
     fun setOnMovieClickListener(listener: MainPageActivity) {
         movieClickListener = listener
     }
-
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val movieImageView1: ImageView = itemView.findViewById(R.id.movieImageView1)
@@ -120,26 +119,6 @@ class MovieAdapter(private val movies: List<Movie>) :
         // Обработчик клика на второй фильм
         holder.itemView.findViewById<View>(R.id.movieImageView2).setOnClickListener {
             movieClickListener?.onMovieClick(movie2)
-        }
-
-        fun setClickListenerAndImage(
-            view: ImageView,
-            borderDrawable: Int,
-            filledDrawable: Int
-        ) {
-            view.setOnClickListener {
-                val currentImage = view.drawable
-                val newImage = if (currentImage.constantState == ContextCompat.getDrawable(
-                        it.context,
-                        borderDrawable
-                    )?.constantState
-                ) {
-                    ContextCompat.getDrawable(it.context, filledDrawable)
-                } else {
-                    ContextCompat.getDrawable(it.context, borderDrawable)
-                }
-                view.setImageDrawable(newImage)
-            }
         }
 
         setClickListenerAndImage(holder.addFavorites, R.drawable.baseline_favorite_border_24, R.drawable.baseline_favorite_24)

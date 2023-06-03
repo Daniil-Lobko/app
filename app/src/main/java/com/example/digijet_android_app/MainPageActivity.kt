@@ -22,8 +22,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MainPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
-    MovieAdapter.OnMovieClickListener {
+class MainPageActivity : AppCompatActivity(), MovieAdapter.OnMovieClickListener {
 
     private lateinit var movieRecyclerView: RecyclerView
     private lateinit var movieAdapter: MovieAdapter
@@ -67,6 +66,11 @@ class MainPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
         val closeButton = findViewById<ImageView>(R.id.closeButton)
         closeButton.setOnClickListener {
+            drawerLayout.closeDrawer(GravityCompat.START)
+        }
+
+        val menu_home = findViewById<LinearLayout>(R.id.menu_home)
+        menu_home.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.START)
         }
 
@@ -133,15 +137,6 @@ class MainPageActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                     Log.e("Firestore", "Ошибка при сохранении фильма в Firestore", e)
                 }
         }
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.menu_logout -> logout()
-        }
-        // Close the navigation drawer after an item is selected
-        drawerLayout.closeDrawer(GravityCompat.START)
-        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
