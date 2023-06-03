@@ -23,8 +23,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/manrope_extrabold"
             android:gravity="center_horizontal"
-            android:maxHeight="53dp"
-            android:minHeight="53dp"
+            android:maxHeight="54sp"
+            android:minHeight="54sp"
             android:textSize="18sp" />
 
         <RelativeLayout

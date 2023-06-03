@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -72,6 +73,7 @@ class MovieAdapter(private val movies: List<Movie>) :
         val titleTextView2: TextView = itemView.findViewById(R.id.titleTextView2)
         val yearTextView2: TextView = itemView.findViewById(R.id.yearTextView2)
         val ratingTextView2: TextView = itemView.findViewById(R.id.ratingTextView2)
+        val film2: LinearLayout = itemView.findViewById(R.id.film2)
 
         val addFavorites: ImageButton = itemView.findViewById(R.id.addFavorites)
         val unwatched: ImageButton = itemView.findViewById(R.id.unwatched)
@@ -115,6 +117,7 @@ class MovieAdapter(private val movies: List<Movie>) :
                 holder.titleTextView2.visibility = View.GONE
                 holder.yearTextView2.visibility = View.GONE
                 holder.ratingTextView2.visibility = View.GONE
+                holder.film2.visibility = View.GONE
             }
         }
 

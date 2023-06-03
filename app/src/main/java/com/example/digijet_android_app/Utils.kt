@@ -42,7 +42,7 @@ class Utils {
 
             val client = OkHttpClient()
             val request = Request.Builder()
-                .url("https://imdb-api.com/en/API/Top250Movies/k_kpn1nxdc")
+                .url("https://imdb-api.com/en/API/Top250Movies/k_y9cglmlz")
                 .build()
 
             val response = client.newCall(request).execute()

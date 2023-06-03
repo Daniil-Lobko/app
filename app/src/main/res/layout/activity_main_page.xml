@@ -59,44 +59,101 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:visibility="gone"
+                android:padding="16dp"
                 android:layout_marginTop="55dp"
                 android:background="@drawable/rounded_corners">
 
-                <!-- Элементы для выбора фильтров -->
-                <EditText
-                    android:id="@+id/yearFromEditText"
+                <!-- Year Range Filter -->
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:hint="@string/year_from_hint" />
+                    android:text="Year Range"
+                    android:fontFamily="@font/manrope_bold"
+                    android:textSize="16sp"
+                    android:paddingBottom="8dp" />
 
-                <EditText
-                    android:id="@+id/yearToEditText"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:hint="@string/year_to_hint" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
 
-                <EditText
-                    android:id="@+id/ratingFromEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:hint="@string/rating_from_hint" />
+                    <EditText
+                        android:id="@+id/yearFromEditText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:hint="From" />
 
-                <EditText
-                    android:id="@+id/ratingToEditText"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:textSize="16sp"
+                        android:paddingHorizontal="8dp" />
+
+                    <EditText
+                        android:id="@+id/yearToEditText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:hint="To" />
+
+                </LinearLayout>
+
+                <!-- Rating Range Filter -->
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:hint="@string/rating_to_hint" />
+                    android:text="Rating Range"
+                    android:fontFamily="@font/manrope_bold"
+                    android:textSize="16sp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <EditText
+                        android:id="@+id/ratingFromEditText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="numberDecimal"
+                        android:hint="From" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-"
+                        android:textSize="16sp"
+                        android:paddingHorizontal="8dp" />
+
+                    <EditText
+                        android:id="@+id/ratingToEditText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="numberDecimal"
+                        android:hint="To" />
+
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/applyButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/apply_button_label"
-                    android:background="@drawable/rounded_corners2"/>
+                    android:text="Apply"
+                    android:fontFamily="@font/manrope_bold"
+                    android:textSize="16sp"
+                    android:paddingVertical="12dp"
+                    android:background="@drawable/rounded_corners2"
+                    android:layout_marginTop="16dp" />
 
             </LinearLayout>
 
@@ -112,14 +169,14 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/movieRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="620dp"
+            android:layout_height="710dp"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="20dp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="680dp"
+            android:layout_marginTop="760dp"
             android:layout_marginBottom="60dp"
             android:background="@color/text_color"
             android:elevation="1dp" />

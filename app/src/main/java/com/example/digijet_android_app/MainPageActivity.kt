@@ -1,6 +1,7 @@
 package com.example.digijet_android_app
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -80,6 +81,9 @@ class MainPageActivity : AppCompatActivity(), MovieAdapter.OnMovieClickListener 
         val menu_home = findViewById<LinearLayout>(R.id.menu_home)
         menu_home.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.START)
+            val intent = Intent(this, MainPageActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
         // Create ActionBarDrawerToggle and attach it to the DrawerLayout
