@@ -45,6 +45,7 @@ class MovieAdapter(private val movies: List<Movie>) :
         movieClickListener = listener
     }
 
+
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val movieImageView1: ImageView = itemView.findViewById(R.id.movieImageView1)
         val titleTextView1: TextView = itemView.findViewById(R.id.titleTextView1)
@@ -65,8 +66,7 @@ class MovieAdapter(private val movies: List<Movie>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val itemView =
-            LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
         return MovieViewHolder(itemView)
     }
 

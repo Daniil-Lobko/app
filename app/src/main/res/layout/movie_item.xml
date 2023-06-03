@@ -41,7 +41,6 @@
                 android:id="@+id/ratingTextView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
@@ -91,6 +90,7 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/baseline_remove_red_eye_24"
                 tools:ignore="TouchTargetSizeCheck" />
+
 
             <ImageButton
                 android:id="@+id/addFavorites"
@@ -168,7 +168,6 @@
                 android:gravity="center"
                 android:textSize="16sp" />
 
-
         </LinearLayout>
 
         <LinearLayout
@@ -201,6 +200,7 @@
                 android:src="@drawable/baseline_remove_red_eye_24"
                 tools:ignore="DuplicateIds,TouchTargetSizeCheck" />
 
+
             <ImageButton
                 android:id="@+id/addFavorites2"
                 android:layout_width="wrap_content"
@@ -212,11 +212,8 @@
                 android:src="@drawable/baseline_favorite_border_24"
                 tools:ignore="DuplicateIds,TouchTargetSizeCheck" />
 
-
         </LinearLayout>
 
     </LinearLayout>
 
 </LinearLayout>
-
-
