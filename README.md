@@ -41,3 +41,40 @@
 - Фільтрація фільмів за жанром, роком випуску, рейтингом та ін.
 - Налаштовувані фільтри для уточнення результатів пошуку.
  
+# Візуалізація деяких сторінок додатку 
+## Початок роботи 
+Сторінка завантаження та сторінка вибору дій (реєстрація або авторизація)
+ <table>
+<tbody>
+  <tr>
+    <td><img src="image/LoadingPage.png" width="400" height="900"></td>
+    <td><img src="image/WelcomePage.png" width="400" height="900"></td>
+  </tr>
+</tbody>
+</table>
+
+## Сторінки авторизації та реєстрації
+ <table>
+<tbody>
+  <tr>
+    <td><img src="image/LoginPage.png" width="400" height="900"></td>
+    <td><img src="image/RegisterPage.png" width="400" height="900"></td>
+  </tr>
+</tbody>
+</table>
+
+## Головна сторінка 
+На головній сторінці епредставлено ТОП 250 фільмів, які можна буде додати в обране або переглянуте 
+<div align="center">
+<img src="image/MainPage.png" width="400" height="900">
+</div>
+
+## Наша навігаційна панель 
+<div align="center">
+<img src="image/NavBar.png" width="400" height="900">
+</div>
+
+## Фільтрування фільмів 
+<div align="center">
+<img src="image/Filter.png" width="400" height="400">
+</div>
