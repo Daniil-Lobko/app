@@ -23,15 +23,12 @@ class Utils {
             val imDbRating: String
         )
 
-
         data class MovieResponse(
             val items: List<MovieData>
         )
 
         fun logout(context: Context, sharedPreferences: SharedPreferences) {
-            val editor = sharedPreferences.edit()
-            editor.clear()
-            editor.apply()
+            sharedPreferences.edit().clear().apply()
 
             val intent = Intent(context, WelcomeActivity::class.java)
             context.startActivity(intent)
@@ -39,7 +36,6 @@ class Utils {
         }
 
         fun fetchMovies(): List<Movie> {
-
             val client = OkHttpClient()
             val request = Request.Builder()
                 .url("https://imdb-api.com/en/API/Top250Movies/k_y9cglmlz")
@@ -48,11 +44,9 @@ class Utils {
             val response = client.newCall(request).execute()
             val responseData = response.body?.string()
 
-            // Используем библиотеку Gson для разбора JSON-ответа
             val gson = Gson()
             val movieResponse = gson.fromJson(responseData, MovieResponse::class.java)
 
-            // Создаем список фильмов из полученных данных
             val movies = mutableListOf<Movie>()
 
             for (i in 0 until movieResponse.items.size step 2) {
@@ -77,7 +71,6 @@ class Utils {
                     movies.add(movie1)
                     movies.add(movie2)
                 } else {
-                    // Если остался только один фильм в списке, добавьте его отдельно
                     val item = movieResponse.items[i]
                     val movie = Movie(
                         id = item.id,
@@ -89,10 +82,10 @@ class Utils {
                     movies.add(movie)
                 }
             }
-            Log.d("Movie1:", movies[0].toString())
-            Log.d("Movie2:", movies[1].toString())
-            Log.d("Movie3:", movies[2].toString())
-            Log.d("Movie4:", movies[3].toString())
+
+            movies.take(4).forEachIndexed { index, movie ->
+                Log.d("Movie${index + 1}:", movie.toString())
+            }
 
             return movies
         }
@@ -118,3 +111,4 @@ class Utils {
         }
     }
 }
+

@@ -41,89 +41,66 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         backButton.setOnClickListener {
-            // Переадресация на экран WelcomeActivity
-            val intent = Intent(this, WelcomeActivity::class.java)
-            startActivity(intent)
-            finish()
+            navigateToWelcomeActivity()
         }
-
     }
 
     private fun register(email: String, password: String, nickname: String, phoneNumber: String) {
-
-        // Password length validation
         if (password.length < 6) {
-            Toast.makeText(this, "Password must be at least 6 characters long", Toast.LENGTH_SHORT)
-                .show()
+            showErrorMessage("Password must be at least 6 characters long")
             return
         }
 
-        // Phone number validation
         if (phoneNumber.length < 10) {
-            Toast.makeText(this, "Invalid phone number", Toast.LENGTH_SHORT).show()
+            showErrorMessage("Invalid phone number")
             return
         }
-        // Nickname validation
+
         if (nickname.isEmpty()) {
-            Toast.makeText(this, "Nickname cannot be empty", Toast.LENGTH_SHORT).show()
+            showErrorMessage("Nickname cannot be empty")
             return
         }
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Registration success
-                    Log.d(TAG, "registerWithEmail:success")
-                    val firebaseUser = task.result?.user
-
-                    // Save user data to Cloud Firestore
-                    saveUserDataToFirestore(
-                        email,
-                        password,
-                        firebaseUser?.uid,
-                        nickname,
-                        phoneNumber
-                    )
-
-                    firebaseUser?.uid?.let { Log.d("firebaseUser", it) }
-
-                    // Save user session data
-                    sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-                    val editor = sharedPreferences.edit()
-                    editor.putString("email", email)
-                    editor.putString("password", password)
-                    editor.putString("userId", firebaseUser?.uid)
-                    editor.putString("nickname", nickname)
-                    editor.putString("phoneNumber", phoneNumber)
-                    editor.putBoolean("rememberMe", true)
-                    editor.apply()
-
-                    // Navigate to another activity after successful registration
-                    val intent = Intent(this, MainPageActivity::class.java)
-                    startActivity(intent)
-                    finish()
-
+                    handleRegistrationSuccess(email, password, task.result?.user?.uid, nickname, phoneNumber)
                 } else {
-                    // Registration failed
-                    Log.w(TAG, "registerWithEmail:failure", task.exception)
-                    val exception = task.exception
-                    val errorMessage: String = when (exception) {
-                        is FirebaseAuthUserCollisionException -> "The email address is already in use"
-                        is FirebaseAuthInvalidCredentialsException -> "An invalid email format"
-                        else -> "Registration failed"
-                    }
-                    Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+                    handleRegistrationFailure(task.exception)
                 }
             }
     }
 
-    private fun saveUserDataToFirestore(
-        email: String,
-        password: String,
-        userId: String?,
-        nickname: String,
-        phoneNumber: String
-    ) {
+    private fun handleRegistrationSuccess(email: String, password: String, userId: String?, nickname: String, phoneNumber: String) {
+        Log.d(TAG, "registerWithEmail:success")
+
+        saveUserDataToFirestore(email, password, userId, nickname, phoneNumber)
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val editor = sharedPreferences.edit()
+        editor.putString("email", email)
+        editor.putString("password", password)
+        editor.putString("userId", userId)
+        editor.putString("nickname", nickname)
+        editor.putString("phoneNumber", phoneNumber)
+        editor.putBoolean("rememberMe", true)
+        editor.apply()
+
+        navigateToMainPageActivity()
+    }
+
+    private fun handleRegistrationFailure(exception: Exception?) {
+        Log.w(TAG, "registerWithEmail:failure", exception)
+
+        val errorMessage = when (exception) {
+            is FirebaseAuthUserCollisionException -> "The email address is already in use"
+            is FirebaseAuthInvalidCredentialsException -> "Invalid email format"
+            else -> "Registration failed"
+        }
+        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun saveUserDataToFirestore(email: String, password: String, userId: String?, nickname: String, phoneNumber: String) {
         val firestore = FirebaseFirestore.getInstance()
         val userCollection = firestore.collection("users")
         val userDocument = userCollection.document(userId ?: "")
@@ -144,6 +121,21 @@ class RegisterActivity : AppCompatActivity() {
             }
     }
 
+    private fun navigateToWelcomeActivity() {
+        val intent = Intent(this, WelcomeActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun navigateToMainPageActivity() {
+        val intent = Intent(this, MainPageActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun showErrorMessage(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
 
     companion object {
         private const val TAG = "RegisterActivity"

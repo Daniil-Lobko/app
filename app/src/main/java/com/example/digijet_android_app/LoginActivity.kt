@@ -1,16 +1,16 @@
 package com.example.digijet_android_app
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
-import android.content.SharedPreferences
-import android.preference.PreferenceManager
 import android.widget.CheckBox
-import android.widget.TextView
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -52,22 +52,33 @@ class LoginActivity : AppCompatActivity() {
             val rememberMe = rememberMeCheckBox.isChecked
 
             if (rememberMe) {
-                val editor = sharedPreferences.edit()
-                editor.putString("email", email)
-                editor.putString("password", password)
-                editor.putBoolean("rememberMe", true)
-                editor.apply()
+                saveLoginCredentials(email, password)
+            } else {
+                clearLoginCredentials()
             }
 
             login(email, password)
         }
 
         backButton.setOnClickListener {
-            // Переадресация на экран WelcomeActivity
-            val intent = Intent(this, WelcomeActivity::class.java)
-            startActivity(intent)
-            finish()
+            navigateToWelcomeActivity()
         }
+    }
+
+    private fun saveLoginCredentials(email: String, password: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString("email", email)
+        editor.putString("password", password)
+        editor.putBoolean("rememberMe", true)
+        editor.apply()
+    }
+
+    private fun clearLoginCredentials() {
+        val editor = sharedPreferences.edit()
+        editor.remove("email")
+        editor.remove("password")
+        editor.remove("rememberMe")
+        editor.apply()
     }
 
     private fun login(email: String, password: String) {
@@ -75,65 +86,59 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "loginWithEmail:success")
-                    // Здесь можно перейти на другую активити после успешного входа
-
                     val editor = sharedPreferences.edit()
                     editor.putString("email", email)
                     editor.putString("password", password)
                     editor.putBoolean("rememberMe", true)
                     editor.apply()
 
-                    // Вызов функции getUserParams в корутине
                     GlobalScope.launch {
                         val nickname = getUserParamByEmail(email, "nickname")
                         val userId = getUserParamByEmail(email, "userId")
 
-                        // Сохранение полученных значений
                         withContext(Dispatchers.Main) {
                             editor.putString("nickname", nickname)
                             editor.putString("userId", userId)
                             editor.apply()
 
-                            val savedNickname = sharedPreferences.getString("nickname", null)
-                            val savedUserId = sharedPreferences.getString("userId", null)
-                            if (savedNickname != null) {
-                                Log.d("nickname", savedNickname)
-                            }
-                            if (savedUserId != null) {
-                                Log.d("userId", savedUserId)
-                            }
-
-                            val intent = Intent(this@LoginActivity, MainPageActivity::class.java)
-                            startActivity(intent)
-                            finish()
+                            navigateToMainPageActivity()
                         }
                     }
                 } else {
                     Log.w(TAG, "loginWithEmail:failure", task.exception)
-                    // Здесь можно обработать ошибку входа
+                    Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
                 }
             }
     }
 
+    private suspend fun getUserParamByEmail(email: String, param: String): String? =
+        withContext(Dispatchers.IO) {
+            val firestore = FirebaseFirestore.getInstance()
+            val querySnapshot = firestore.collection("users")
+                .whereEqualTo("email", email)
+                .limit(1)
+                .get()
+                .await()
 
-    private suspend fun getUserParamByEmail(email: String, param: String): String? = withContext(Dispatchers.IO) {
-        val firestore = FirebaseFirestore.getInstance()
-        val querySnapshot = firestore.collection("users")
-            .whereEqualTo("email", email)
-            .limit(1)
-            .get()
-            .await()
+            if (querySnapshot.isEmpty) {
+                return@withContext null
+            }
 
-        if (querySnapshot.isEmpty) {
-            // Если запрос не вернул результатов, значит пользователя с таким email нет
-            return@withContext null
+            val userDocument = querySnapshot.documents.first()
+
+            return@withContext userDocument.getString(param)
         }
 
-        // Получаем первый документ из результатов запроса
-        val userDocument = querySnapshot.documents.first()
+    private fun navigateToWelcomeActivity() {
+        val intent = Intent(this, WelcomeActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 
-        // Возвращаем значение поля "userId" из документа
-        return@withContext userDocument.getString(param)
+    private fun navigateToMainPageActivity() {
+        val intent = Intent(this, MainPageActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     companion object {

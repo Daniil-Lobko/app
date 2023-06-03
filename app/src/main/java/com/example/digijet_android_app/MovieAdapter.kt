@@ -9,10 +9,12 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.digijet_android_app.Utils.Companion.setClickListenerAndImage
 import com.squareup.picasso.Picasso
+import java.util.Calendar
+import android.content.Context
 
 data class Movie(
     val id: String,
@@ -31,7 +33,7 @@ data class SelectedMovieData(
     val imDbRating: String
 )
 
-class MovieAdapter(private val movies: List<Movie>) :
+class MovieAdapter(private val movies: List<Movie>, private val context: Context) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     private var yearFromFilter: String? = null
@@ -41,13 +43,43 @@ class MovieAdapter(private val movies: List<Movie>) :
     private var filteredMovies: List<Movie> = movies
 
     fun updateFilters(yearFrom: String?, yearTo: String?, ratingFrom: String?, ratingTo: String?) {
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+
+        // Check if yearFrom is greater than the current year
+        if (yearFrom?.toIntOrNull() ?: 0 > currentYear) {
+            showToast("Year From cannot be greater than the current year")
+            return
+        }
+
+        // Check if yearTo is greater than the current year
+        if (yearTo?.toIntOrNull() ?: 0 > currentYear) {
+            showToast("Year To cannot be greater than the current year")
+            return
+        }
+
+        // Check if ratingFrom is outside the range of 0 to 10
+        if (ratingFrom?.toFloatOrNull() ?: 0f !in 0f..10f) {
+            showToast("Rating From must be between 0 and 10")
+            return
+        }
+
+        // Check if ratingTo is outside the range of 0 to 10
+        if (ratingTo?.toFloatOrNull() ?: 0f !in 0f..10f) {
+            showToast("Rating To must be between 0 and 10")
+            return
+        }
+
         yearFromFilter = yearFrom
         yearToFilter = yearTo
         ratingFromFilter = ratingFrom
         ratingToFilter = ratingTo
 
-        filteredMovies = applyFilters(movies) // Применяем фильтры к исходному списку фильмов
+        filteredMovies = applyFilters(movies)
         notifyDataSetChanged()
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
     // Интерфейс для обработки кликов на фильмы
