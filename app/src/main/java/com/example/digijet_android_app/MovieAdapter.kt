@@ -15,14 +15,17 @@ import com.example.digijet_android_app.Utils.Companion.setClickListenerAndImage
 import com.squareup.picasso.Picasso
 import java.util.Calendar
 import android.content.Context
+import com.google.firebase.firestore.PropertyName
 
 data class Movie(
-    val id: String,
-    val title: String,
-    val year: String,
-    val image: String,
-    val imDbRating: String
-)
+    @PropertyName("id") val id: String = "",
+    @PropertyName("title") val title: String = "",
+    @PropertyName("year") val year: String = "",
+    @PropertyName("image") val image: String = "",
+    @PropertyName("imDbRating") val imDbRating: String = ""
+) {
+    constructor() : this("", "", "", "", "")
+}
 
 data class SelectedMovieData(
     val userId: String,
@@ -91,6 +94,10 @@ class MovieAdapter(private val movies: List<Movie>, private val context: Context
 
     // Метод для установки слушателя кликов на фильмы
     fun setOnMovieClickListener(listener: MainPageActivity) {
+        movieClickListener = listener
+    }
+
+    fun deleteOnMovieClickListener(listener: FavoriteMoviesActivity) {
         movieClickListener = listener
     }
 
