@@ -144,29 +144,38 @@ class MainPageActivity : AppCompatActivity(), MovieAdapter.OnMovieClickListener 
 
     override fun onMovieClick(movie: Movie) {
         val savedUserId = sharedPreferences.getString("userId", null)
-        savedUserId?.let {
-            Log.d("savedUserId", it)
-        }
+        savedUserId?.let { userId ->
+            val moviesCollection = firestore.collection("favorite-movies")
 
-        val selectedMovie = savedUserId?.let {
-            SelectedMovieData(
-                userId = it,
-                id = movie.id,
-                title = movie.title,
-                year = movie.year,
-                image = movie.image,
-                imDbRating = movie.imDbRating
-            )
-        }
+            moviesCollection
+                .whereEqualTo("title", movie.title)
+                .whereEqualTo("userId", userId)
+                .get()
+                .addOnSuccessListener { querySnapshot ->
+                    if (querySnapshot.isEmpty) {
+                        val selectedMovie = SelectedMovieData(
+                            userId = userId,
+                            id = movie.id,
+                            title = movie.title,
+                            year = movie.year,
+                            image = movie.image,
+                            imDbRating = movie.imDbRating
+                        )
 
-        selectedMovie?.let { movieData ->
-            val movieDocument = firestore.collection("favorite-movies").document()
-            movieDocument.set(movieData)
-                .addOnSuccessListener {
-                    Log.d("Firestore", "Фильм успешно сохранен в Firestore")
+                        moviesCollection
+                            .add(selectedMovie)
+                            .addOnSuccessListener {
+                                Log.d("Firestore", "Фильм успешно сохранен в Firestore")
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e("Firestore", "Ошибка при сохранении фильма в Firestore", e)
+                            }
+                    } else {
+                        Log.d("Firestore", "Фильм уже существует в коллекции")
+                    }
                 }
-                .addOnFailureListener { e ->
-                    Log.e("Firestore", "Ошибка при сохранении фильма в Firestore", e)
+                .addOnFailureListener { exception ->
+                    Log.e("Firestore", "Ошибка при проверке фильма в Firestore", exception)
                 }
         }
     }
