@@ -46,6 +46,11 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun register(email: String, password: String, nickname: String, phoneNumber: String) {
+        if (email.isEmpty()) {
+            showErrorMessage("Email cannot be empty")
+            return
+        }
+
         if (password.length < 6) {
             showErrorMessage("Password must be at least 6 characters long")
             return
