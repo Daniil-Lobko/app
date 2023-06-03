@@ -34,7 +34,7 @@
                 android:id="@+id/upperText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toStartOf="@id/iconButton2"
+                android:layout_toStartOf="@id/filterButton"
                 android:layout_toEndOf="@id/iconButton"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
@@ -45,13 +45,60 @@
                 android:fontFamily="@font/manrope_extrabold"/>
 
             <ImageButton
-                android:id="@+id/iconButton2"
+                android:id="@+id/filterButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
                 android:src="@drawable/baseline_filter_alt_24" />
+
+            <LinearLayout
+                android:id="@+id/filterLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_marginTop="55dp"
+                android:background="@drawable/rounded_corners">
+
+                <!-- Элементы для выбора фильтров -->
+                <EditText
+                    android:id="@+id/yearFromEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="@string/year_from_hint" />
+
+                <EditText
+                    android:id="@+id/yearToEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="@string/year_to_hint" />
+
+                <EditText
+                    android:id="@+id/ratingFromEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:hint="@string/rating_from_hint" />
+
+                <EditText
+                    android:id="@+id/ratingToEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:hint="@string/rating_to_hint" />
+
+                <Button
+                    android:id="@+id/applyButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/apply_button_label"
+                    android:background="@drawable/rounded_corners2"/>
+
+            </LinearLayout>
 
         </RelativeLayout>
 

@@ -124,6 +124,7 @@
             android:fontFamily="@font/manrope_extrabold"
             android:gravity="center_horizontal"
             android:minHeight="53dp"
+            android:maxHeight="53dp"
             android:textSize="18sp" />
 
         <RelativeLayout

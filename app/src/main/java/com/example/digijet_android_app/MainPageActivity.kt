@@ -1,10 +1,14 @@
 package com.example.digijet_android_app
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -33,6 +37,7 @@ class MainPageActivity : AppCompatActivity(), MovieAdapter.OnMovieClickListener 
 
     private var selectedMovieData: Movie? = null
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_page)
@@ -46,6 +51,9 @@ class MainPageActivity : AppCompatActivity(), MovieAdapter.OnMovieClickListener 
         val savedUserId = sharedPreferences.getString("userId", null)
         val savedNickname = sharedPreferences.getString("nickname", null)
         val savedEmail = sharedPreferences.getString("email", null)
+
+        val filterButton = findViewById<ImageButton>(R.id.filterButton)
+        val filterLayout = findViewById<LinearLayout>(R.id.filterLayout)
 
         val menuHome = navigationView.findViewById<LinearLayout>(R.id.menu_home)
         menuHome.setOnClickListener {
@@ -86,6 +94,39 @@ class MainPageActivity : AppCompatActivity(), MovieAdapter.OnMovieClickListener 
 
         // Enable the Up button
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        // Получите ссылки на элементы интерфейса в активности
+        val applyButton = findViewById<Button>(R.id.applyButton)
+        val yearFromEditText = findViewById<EditText>(R.id.yearFromEditText)
+        val yearToEditText = findViewById<EditText>(R.id.yearToEditText)
+        val ratingFromEditText = findViewById<EditText>(R.id.ratingFromEditText)
+        val ratingToEditText = findViewById<EditText>(R.id.ratingToEditText)
+
+        // Установите обработчик клика на кнопку фильтра
+        filterButton.setOnClickListener {
+            if (filterLayout.visibility == View.VISIBLE) {
+                filterLayout.visibility = View.GONE
+                movieRecyclerView.setVisibility(View.VISIBLE);
+            } else {
+                filterLayout.visibility = View.VISIBLE
+                movieRecyclerView.setVisibility(View.GONE);
+            }
+        }
+
+        // Установите обработчик клика на кнопку применения фильтра
+        applyButton.setOnClickListener {
+            val yearFrom = yearFromEditText.text.toString()
+            val yearTo = yearToEditText.text.toString()
+            val ratingFrom = ratingFromEditText.text.toString()
+            val ratingTo = ratingToEditText.text.toString()
+
+            movieAdapter.updateFilters(yearFrom, yearTo, ratingFrom, ratingTo)
+            filterLayout.visibility = View.GONE
+            movieRecyclerView.setVisibility(View.VISIBLE);
+            filterLayout.isFocusable = false
+            filterLayout.isFocusableInTouchMode = false
+
+        }
 
         // Используем корутины для выполнения сетевого запроса
         GlobalScope.launch(Dispatchers.Main) {
