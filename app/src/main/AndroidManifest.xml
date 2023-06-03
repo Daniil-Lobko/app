@@ -44,6 +44,10 @@
             android:label="@string/MainPage"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
+        <activity
+            android:name=".FavoriteMoviesActivity"
+            android:label="@string/MainPage"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
     </application>
 

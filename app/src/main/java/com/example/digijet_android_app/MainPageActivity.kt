@@ -1,10 +1,15 @@
 package com.example.digijet_android_app
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -29,7 +34,7 @@ class MainPageActivity : AppCompatActivity(), MovieAdapter.OnMovieClickListener 
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var drawerToggle: ActionBarDrawerToggle
     private lateinit var drawerLayout: DrawerLayout
-    private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val firestore: FirebaseFirestore by lazy { FirebaseFirestore.getInstance() }
 
     private var selectedMovieData: Movie? = null
 
@@ -37,44 +42,48 @@ class MainPageActivity : AppCompatActivity(), MovieAdapter.OnMovieClickListener 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_page)
 
-        // Setup navigation drawer
-        val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
-        val navigationView = findViewById<NavigationView>(R.id.navigationView)
-        movieRecyclerView = findViewById(R.id.movieRecyclerView)
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        setupNavigationDrawer()
+        setupViews()
+        setupFilterButton()
+        setupApplyButton()
+        setupMovieRecyclerView()
 
-        val savedUserId = sharedPreferences.getString("userId", null)
         val savedNickname = sharedPreferences.getString("nickname", null)
         val savedEmail = sharedPreferences.getString("email", null)
 
-        val menuHome = navigationView.findViewById<LinearLayout>(R.id.menu_home)
-        menuHome.setOnClickListener {
-            if (savedUserId != null) {
-                Log.d("userId:", savedUserId)
-            };
-        }
+        findViewById<TextView>(R.id.emailText).text = savedEmail
+        findViewById<TextView>(R.id.nicknameText).text = savedNickname
+    }
+
+    private fun setupNavigationDrawer() {
+        drawerLayout = findViewById(R.id.drawerLayout)
+        val navigationView = findViewById<NavigationView>(R.id.navigationView)
 
         val menuLogout = navigationView.findViewById<LinearLayout>(R.id.menu_logout)
-        menuLogout.setOnClickListener {
-            logout()
-        }
+        menuLogout.setOnClickListener { logout() }
 
         val iconButton = findViewById<ImageButton>(R.id.iconButton)
-        iconButton.setOnClickListener {
-            drawerLayout.openDrawer(GravityCompat.START)
-        }
+        iconButton.setOnClickListener { drawerLayout.openDrawer(GravityCompat.START) }
 
         val closeButton = findViewById<ImageView>(R.id.closeButton)
-        closeButton.setOnClickListener {
+        closeButton.setOnClickListener { drawerLayout.closeDrawer(GravityCompat.START) }
+
+        val menuHome = findViewById<LinearLayout>(R.id.menu_home)
+        menuHome.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.START)
+            val intent = Intent(this, MainPageActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
-        val menu_home = findViewById<LinearLayout>(R.id.menu_home)
-        menu_home.setOnClickListener {
+        val favoriteButton = findViewById<LinearLayout>(R.id.favoriteButton)
+        favoriteButton.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.START)
+            val intent = Intent(this, FavoriteMoviesActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
-        // Create ActionBarDrawerToggle and attach it to the DrawerLayout
         drawerToggle = ActionBarDrawerToggle(
             this,
             drawerLayout,
@@ -83,37 +92,62 @@ class MainPageActivity : AppCompatActivity(), MovieAdapter.OnMovieClickListener 
         )
         drawerLayout.addDrawerListener(drawerToggle)
         drawerToggle.syncState()
-
-        // Enable the Up button
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
 
-        // Используем корутины для выполнения сетевого запроса
+    private fun setupViews() {
+        movieRecyclerView = findViewById(R.id.movieRecyclerView)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+    }
+
+    private fun setupFilterButton() {
+        val filterButton = findViewById<ImageButton>(R.id.filterButton)
+        val filterLayout = findViewById<LinearLayout>(R.id.filterLayout)
+
+        filterButton.setOnClickListener {
+            if (filterLayout.visibility == View.VISIBLE) {
+                filterLayout.visibility = View.GONE
+                movieRecyclerView.visibility = View.VISIBLE
+            } else {
+                filterLayout.visibility = View.VISIBLE
+                movieRecyclerView.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun setupApplyButton() {
+        val applyButton = findViewById<Button>(R.id.applyButton)
+
+        applyButton.setOnClickListener {
+            val yearFrom = findViewById<EditText>(R.id.yearFromEditText).text.toString()
+            val yearTo = findViewById<EditText>(R.id.yearToEditText).text.toString()
+            val ratingFrom = findViewById<EditText>(R.id.ratingFromEditText).text.toString()
+            val ratingTo = findViewById<EditText>(R.id.ratingToEditText).text.toString()
+
+            movieAdapter.updateFilters(yearFrom, yearTo, ratingFrom, ratingTo)
+            movieRecyclerView.adapter = movieAdapter
+            findViewById<LinearLayout>(R.id.filterLayout).visibility = View.GONE
+            movieRecyclerView.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setupMovieRecyclerView() {
         GlobalScope.launch(Dispatchers.Main) {
             val movies = fetchMovies()
 
-            // Создаем и устанавливаем адаптер с полученным списком фильмов
-            movieAdapter = MovieAdapter(movies)
+            movieAdapter = MovieAdapter(movies, applicationContext)
             movieAdapter.setOnMovieClickListener(this@MainPageActivity)
             movieRecyclerView.layoutManager = LinearLayoutManager(this@MainPageActivity)
             movieRecyclerView.adapter = movieAdapter
         }
-
-        val emailEditText: TextView = findViewById(R.id.emailText)
-        val nicknameEditText: TextView = findViewById(R.id.nicknameText)
-
-        emailEditText.text = savedEmail
-        nicknameEditText.text = savedNickname
-
     }
 
     override fun onMovieClick(movie: Movie) {
-        // Обработка клика на фильм
-        // Ваш код для вывода данных фильма в консоль или выполнения других действий
-
         val savedUserId = sharedPreferences.getString("userId", null)
-        if (savedUserId != null) {
-            Log.d("savedUserId", savedUserId)
+        savedUserId?.let {
+            Log.d("savedUserId", it)
         }
+
         val selectedMovie = savedUserId?.let {
             SelectedMovieData(
                 userId = it,
@@ -125,11 +159,9 @@ class MainPageActivity : AppCompatActivity(), MovieAdapter.OnMovieClickListener 
             )
         }
 
-        val movieDocument = firestore.collection("favorite-movies").document()
-
-        // Устанавливаем значения полей фильма в документ
-        if (selectedMovie != null) {
-            movieDocument.set(selectedMovie)
+        selectedMovie?.let { movieData ->
+            val movieDocument = firestore.collection("favorite-movies").document()
+            movieDocument.set(movieData)
                 .addOnSuccessListener {
                     Log.d("Firestore", "Фильм успешно сохранен в Firestore")
                 }
@@ -140,7 +172,6 @@ class MainPageActivity : AppCompatActivity(), MovieAdapter.OnMovieClickListener 
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle ActionBarDrawerToggle clicks
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true
         }

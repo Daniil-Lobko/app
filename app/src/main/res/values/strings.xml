@@ -9,4 +9,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="select_genre_prompt">Choose genre</string>
+    <string name="year_from_hint">Year (from)</string>
+    <string name="year_to_hint">Year (to)</string>
+    <string name="rating_from_hint">Rating (from)</string>
+    <string name="rating_to_hint">Rating (to)</string>
+    <string name="apply_button_label">Apply</string>
 </resources>

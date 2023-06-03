@@ -8,7 +8,7 @@
     android:background="#FFBDC1D2"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".MainPageActivity">
+    tools:context=".FavoriteMoviesActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -39,7 +39,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_centerVertical="true"
-                android:text="TOP 250"
+                android:text="FAVORITE MOVIES"
                 android:gravity="center"
                 android:textSize="20sp"
                 android:fontFamily="@font/manrope_extrabold"/>
@@ -272,7 +272,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/favoriteButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
